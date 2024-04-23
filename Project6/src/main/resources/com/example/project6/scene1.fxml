@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project6.homebutton">
+   <children>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <AnchorPane prefHeight="80.0" prefWidth="200.0" style="-fx-background-color: #5F5F5F;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="83.0" layoutY="32.0" prefHeight="80.0" prefWidth="0.0" style="-fx-background-color: #3492eb;" text="BLOCKCHAIN NEWS" textFill="#ffae00" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="701.0" AnchorPane.topAnchor="0.0">
+                     <font>
+                        <Font name="Bodoni MT Black" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="283.0" layoutY="28.0" prefWidth="580.0" AnchorPane.bottomAnchor="26.4" AnchorPane.leftAnchor="283.0" AnchorPane.rightAnchor="97.6" AnchorPane.topAnchor="28.0" />
+                  <Button layoutX="882.0" layoutY="27.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="64.0" text="Search" textFill="#862020" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="882.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="28.0">
+                     <font>
+                        <Font name="Times New Roman Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <ImageView fx:id="searchicon" fitHeight="22.0" fitWidth="22.0" layoutX="841.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="26.4" AnchorPane.leftAnchor="839.2" AnchorPane.rightAnchor="99.0" AnchorPane.topAnchor="29.0">
+                     <image>
+                        <Image url="@../../../../../../../../Downloads/png-transparent-computer-icons-google-search-symbol-mobile-search-search-for-miscellaneous-logo-mobile-phones-thumbnail.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </top>
+         <left>
+            <AnchorPane prefHeight="460.0" prefWidth="260.0" style="-fx-background-color: #141f69;" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox layoutX="80.0" layoutY="6.0" prefHeight="353.0" prefWidth="260.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <ButtonBar prefHeight="40.0" prefWidth="200.0">
+                          <buttons>
+                            <Button fx:id="home" mnemonicParsing="false" onAction="#switchSceneofHome" prefHeight="30.0" prefWidth="338.0" style="-fx-background-color: #141f69;" text="Home" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                                 <graphic>
+                                    <ImageView fx:id="homeicon" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../../../../../Downloads/home-icon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                          </buttons>
+                           <VBox.margin>
+                              <Insets right="13.0" />
+                           </VBox.margin>
+                        </ButtonBar>
+                        <ButtonBar prefHeight="40.0" prefWidth="200.0">
+                          <buttons>
+                            <Button fx:id="News" mnemonicParsing="false" onAction="#switchSceneofListView" prefHeight="30.0" prefWidth="338.0" style="-fx-background-color: #141f69;" text="News" textFill="WHITE">
+                                 <graphic>
+                                    <ImageView fx:id="newsicon" fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../../../../../Downloads/images.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                          </buttons>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <VBox.margin>
+                              <Insets right="13.0" top="13.0" />
+                           </VBox.margin>
+                        </ButtonBar>
+                        <ButtonBar prefHeight="40.0" prefWidth="200.0">
+                          <buttons>
+                            <Button fx:id="Trendings" mnemonicParsing="false" onAction="#switchSceneofListView" prefHeight="30.0" prefWidth="438.0" style="-fx-background-color: #141f69;" text="Trendings" textFill="WHITE">
+                                 <graphic>
+                                    <ImageView fx:id="trendingsicon" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../../../../../Downloads/530-5306332_latest-trends-and-plans-trends-white-icon-png.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                          </buttons>
+                           <VBox.margin>
+                              <Insets right="13.0" top="13.0" />
+                           </VBox.margin>
+                        </ButtonBar>
+                        <ButtonBar prefHeight="40.0" prefWidth="200.0">
+                          <buttons>
+                            <Button fx:id="Authors" mnemonicParsing="false" onAction="#switchSceneofListView" prefHeight="30.0" prefWidth="541.0" style="-fx-background-color: #141f69;" text="Authors" textFill="WHITE">
+                                 <graphic>
+                                    <ImageView fx:id="athoursicon" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../../../../../Downloads/user-icon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                          </buttons>
+                           <VBox.margin>
+                              <Insets right="13.0" top="13.0" />
+                           </VBox.margin>
+                        </ButtonBar>
+                        <ButtonBar prefHeight="40.0" prefWidth="200.0">
+                          <buttons>
+                            <Button fx:id="History" mnemonicParsing="false" onAction="#switchSceneofListView" prefHeight="30.0" prefWidth="547.0" style="-fx-background-color: #141f69;" text="History" textFill="WHITE">
+                                 <graphic>
+                                    <ImageView fx:id="historyicon" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../../../../../Downloads/images%20(1).png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                          </buttons>
+                           <VBox.margin>
+                              <Insets right="13.0" top="13.0" />
+                           </VBox.margin>
+                        </ButtonBar>
+                        <ButtonBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #141f69;">
+                          <buttons>
+                            <Button fx:id="Aboutus" mnemonicParsing="false" onAction="#switchSceneofListView" prefHeight="30.0" prefWidth="342.0" style="-fx-background-color: #141f69;" text="About us" textFill="WHITE">
+                                 <graphic>
+                                    <ImageView fx:id="aboutusicon" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../../../../../Downloads/festival-icon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                          </buttons>
+                           <VBox.margin>
+                              <Insets right="13.0" top="13.0" />
+                           </VBox.margin>
+                        </ButtonBar>
+                     </children>
+                  </VBox>
+                  <ButtonBar layoutX="30.0" layoutY="420.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0">
+                    <buttons>
+                      <Button fx:id="Exit" mnemonicParsing="false" onAction="#ExitTheProgram" prefHeight="30.0" prefWidth="271.0" text="Exit">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                    </buttons>
+                  </ButtonBar>
+               </children>
+            </AnchorPane>
+         </left>
+         <right>
+            <AnchorPane prefHeight="457.0" prefWidth="70.0" style="-fx-background-color: #A9A9A9;" BorderPane.alignment="CENTER">
+               <children>
+                  <ScrollBar fx:id="scrollbar" orientation="VERTICAL" prefHeight="100.0" prefWidth="14.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="55.0" AnchorPane.topAnchor="0.0" />
+                  <Button layoutX="10.0" minHeight="-Infinity" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #143e69;" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <graphic>
+                        <ImageView fx:id="firsticon" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../../../Downloads/first-icon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button layoutX="16.0" layoutY="50.0" minHeight="-Infinity" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #143e69;" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="55.0">
+                     <graphic>
+                        <ImageView fx:id="previousicon" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../../../Downloads/previous-icon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button layoutX="16.0" layoutY="120.0" minHeight="-Infinity" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #143e69;" AnchorPane.bottomAnchor="299.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="110.0">
+                     <graphic>
+                        <ImageView fx:id="nexticon" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../../../Downloads/next-icon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button layoutX="15.0" layoutY="161.0" minHeight="-Infinity" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #143e69;" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="166.0">
+                     <graphic>
+                        <ImageView fx:id="lasticon" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../../../Downloads/last-icon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+            </AnchorPane>
+         </right>
+         <center>
+            <ImageView fitHeight="460.0" fitWidth="630.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+            </ImageView>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
