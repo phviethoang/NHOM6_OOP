@@ -8,10 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -19,13 +16,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import data.*;
 import helper.*;
+import javafx.util.Pair;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.ResourceBundle;
 
-public class ControllerTrending extends GUIController implements Initializable {
+public class ControllerTrending extends ControllerGUI implements Initializable {
 
     @FXML
     private Button author;
@@ -55,9 +54,6 @@ public class ControllerTrending extends GUIController implements Initializable {
     private Button lastButton;
 
     @FXML
-    private ListView<String> listNews = new ListView<String>();
-
-    @FXML
     private AnchorPane scenePane;
 
     @FXML
@@ -73,47 +69,63 @@ public class ControllerTrending extends GUIController implements Initializable {
     private Button upButton;
     @FXML
     private Label label;
+    @FXML
+    private TableView<Pair<String,String>> tableView;
 
     Cabinet c = new Cabinet();
+    AuthorCabinet ac=new AuthorCabinet();
 
-    String currentIndex = new String();
+    String currentIndex;
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        currentIndex = "A";
+        currentIndex="A";
         this.c.setBox(LoadFileAndSetData
-                .data_array("C:\\Users\\Dell\\Desktop\\OOPnhom6\\json\\blockchain (1).json"));
+                .data_array("C:\\Users\\Dell\\Desktop\\OOPnhom6\\json\\blockchainDigitaltrends (2).json"));
+        this.ac.setAuthorBox(LoadFileAndSetData.data_author("C:\\Users\\Dell\\Desktop\\OOPnhom6\\json\\authorsDigitalTrends.json"));
     }
 
 
     @FXML
     void showAuthor(ActionEvent event) {
+//        try {
+//            ArrayList<String> s = LoadFileAndSetData.popularAuth(c.getBox());
+//            ObservableList<String> lst = FXCollections.observableArrayList();
+//            for (int i = 0; i < 10; i++) {
+//                lst.add(s.get(i));
+//            }
+//            listNews.setItems(lst);
+//            label.setText("TOP 10 POPULAR AUTHORS");
+//            currentIndex = "A";
+//        }catch (Exception e){
+//
+//        }
         try {
-            ArrayList<String> s = LoadFileAndSetData.popularAuth(c.getBox());
-            ObservableList<String> lst = FXCollections.observableArrayList();
-            for (int i = 0; i < 10; i++) {
-                lst.add(s.get(i));
+            MakeTableView.makeTableAuthorTrending(tableView);
+            Map<String,String> map = LoadFileAndSetData.popularAuth(c.getBox());
+            ObservableList<Pair<String, String>> list = FXCollections.observableArrayList();
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                list.add(new Pair<>(entry.getKey(), entry.getValue()));
             }
-            listNews.setItems(lst);
-            label.setText("TOP 10 PUPULAR AUTHORS");
+            tableView.setItems(list);
+            label.setText("TOP 10 POPULAR AUTHORS");
             currentIndex = "A";
         }catch (Exception e){
-
+            e.printStackTrace();
         }
     }
 
     @FXML
     void showCategory(ActionEvent event) {
         try {
-            ArrayList<String> s = LoadFileAndSetData.popularCategory(c.getBox());
-
-            ObservableList<String> lst = FXCollections.observableArrayList();
-
-            for (int i = 0; i < 10; i++) {
-                lst.add(s.get(i));
+            MakeTableView.makeTableCategoryTrending(tableView);
+            Map<String,String> map = LoadFileAndSetData.popularCategory(c.getBox());
+            ObservableList<Pair<String, String>> list = FXCollections.observableArrayList();
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                list.add(new Pair<>(entry.getKey(), entry.getValue()));
             }
-            listNews.setItems(lst);
-            label.setText("TOP 10 PUPULAR CATEGORIES");
-            currentIndex = "A";
+            tableView.setItems(list);
+            label.setText("TOP 10 POPULAR CATEGORIES");
+            currentIndex = "B";
         }catch (Exception e){
 
         }
@@ -122,16 +134,15 @@ public class ControllerTrending extends GUIController implements Initializable {
     @FXML
     void showHashTag(ActionEvent event) {
         try {
-            ArrayList<String> s = LoadFileAndSetData.popularTags(c.getBox());
-
-            ObservableList<String> lst = FXCollections.observableArrayList();
-
-            for (int i = 0; i < 10; i++) {
-                lst.add(s.get(i));
+            MakeTableView.makeTableHashtagTrending(tableView);
+            Map<String,String> map = LoadFileAndSetData.popularTags(c.getBox());
+            ObservableList<Pair<String, String>> list = FXCollections.observableArrayList();
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                list.add(new Pair<>(entry.getKey(), entry.getValue()));
             }
-            listNews.setItems(lst);
-            label.setText("TOP 10 PUPULAR HASHTAGS");
-            currentIndex = "A";
+            tableView.setItems(list);
+            label.setText("TOP 10 POPULAR HASHTAGS");
+            currentIndex = "B";
         }catch (Exception e){
 
         }
@@ -142,39 +153,82 @@ public class ControllerTrending extends GUIController implements Initializable {
 //
 //    }
 @FXML
-void showDetails(MouseEvent event) throws IOException {
-
-    if(event.getClickCount() == 2) {
-        if(currentIndex == "A") {
-            String keyword = listNews.getSelectionModel().getSelectedItem();
-            ObservableList<String> lst = FXCollections.observableArrayList();
-            for (Article x : SearchAndSort.searchForTrends(keyword, c.getBox())) {
-                lst.add(x.getTitle());
-            }
-            currentIndex = "B";
-            listNews.setItems(lst);
-        }
-        else if(currentIndex == "B") {
-            String keyword = listNews.getSelectionModel().getSelectedItem();
-            for(Article x : c.getBox()) {
-                if(keyword.equals(x.getTitle())) {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("DetailNews.fxml"));
-                    Parent root = loader.load();
-                    ControllerDetail ctl = loader.getController();
-
-                    ctl.setT(x.getDetailContent());
-
-                    Scene scn = new Scene(root);
-                    Stage stage = (Stage) homeButton.getScene().getWindow();
-                    stage.setScene(scn);
-                    stage.show();
-                    break;
+void showDetails(MouseEvent event) {
+    try {
+        if(event.getClickCount()==2) {
+            if (currentIndex.equals("A")) {
+                String keyword = tableView.getSelectionModel().getSelectedItem().getKey();
+                for (int i = 0; i < ac.getAuthorBox().size(); i++) {
+                    if (keyword.equals(ac.getAuthorBox().get(i).getName())) {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("DetailAuthor.fxml"));
+                        Parent root = loader.load();
+                        ControllerAuthorDetail ctl = loader.getController();
+                        ctl.setLabel(keyword);
+                        ctl.displayDetailAuthor(ac.getAuthorBox().get(i));
+                        ctl.showAuthorArticle();
+                        Scene scene = new Scene(root);
+                        Stage stage = (Stage) homeButton.getScene().getWindow();
+                        stage.setScene(scene);
+                        stage.show();
+                        break;
+                    }
                 }
-
+            } else if (currentIndex.equals("B")) {
+                String keyword = tableView.getSelectionModel().getSelectedItem().getKey();
+                ObservableList<Pair<String,String>> list = FXCollections.observableArrayList();
+                for (Article x : SearchAndSort.searchForTrends(keyword, c.getBox())) {
+                    list.add(new Pair<>(x.getTitle(),x.getAuthorView()));
+                }
+                currentIndex = "C";
+                tableView.setItems(list);
+            } else if (currentIndex.equals("C")) {
+                String keyword = tableView.getSelectionModel().getSelectedItem().getKey();
+                for (Article x : c.getBox()) {
+                    if (keyword.equals(x.getTitle())) {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("DetailNews.fxml"));
+                        Parent root = loader.load();
+                        ControllerNewsDetail ctl = loader.getController();
+                        ctl.setDetail(x);
+                        Scene scn = new Scene(root);
+                        Stage stage = (Stage) homeButton.getScene().getWindow();
+                        stage.setScene(scn);
+                        stage.show();
+                        break;
+                    }
+                }
             }
-
         }
+    }catch (Exception e){
+        System.out.println(e.getMessage());
     }
+
+//    if(event.getClickCount() == 2) {
+//        if(currentIndex == "A") {
+//            String keyword = tableView.getSelectionModel().getSelectedItem().getKey();
+//            ObservableList<String> lst = FXCollections.observableArrayList();
+//            for (Article x : SearchAndSort.searchForTrends(keyword, c.getBox())) {
+//                lst.add(x.getTitle());
+//            }
+//            currentIndex = "B";
+//            tableView.setItems(lst);
+//        }
+//        else if(currentIndex == "B") {
+//            String keyword = tableView.getSelectionModel().getSelectedItem().getKey();
+//            for(Article x : c.getBox()) {
+//                if(keyword.equals(x.getTitle())) {
+//                    FXMLLoader loader = new FXMLLoader(getClass().getResource("DetailNews.fxml"));
+//                    Parent root = loader.load();
+//                    ControllerNewsDetail ctl = loader.getController();
+//                    ctl.setDetail(x);
+//                    Scene scn = new Scene(root);
+//                    Stage stage = (Stage) homeButton.getScene().getWindow();
+//                    stage.setScene(scn);
+//                    stage.show();
+//                    break;
+//                }
+//            }
+//
+//        }
 }
     @FXML
     void goHome(ActionEvent event) throws IOException {
@@ -184,7 +238,4 @@ void showDetails(MouseEvent event) throws IOException {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
-
-
 }

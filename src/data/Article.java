@@ -2,16 +2,20 @@ package data;
 
 import java.util.ArrayList;
 
-import helper.LoadFileAndSetData;
-import helper.SearchAndSort;
-public class Article {
+public class Article implements General{
     private String links;
     private String title;
     private String detailContent;
     private String creationDate;
-    private String author;
+    private String summary;
+    private ArrayList<String> author;
+    private String authorView;
     private String category;
     private ArrayList<String> tags;
+//    public Article(String author) {
+//        this.authorView = author;
+//    }
+
     //getter
     public String getLinks(){
         return links;
@@ -25,8 +29,27 @@ public class Article {
     public String getCreationDate(){
         return creationDate;
     }
-    public String getAuthor(){
+
+    public String getSummary() {
+        return summary;
+    }
+
+    @Override
+    public String getGeneralName() {
+        return null;
+    }
+    @Override
+    public String getGeneralAuthor(){
+        return String.join(", ", author);
+    }
+    @Override
+    public String getGeneralTitle(){return title;}
+
+    public ArrayList<String> getAuthor(){
         return author;
+    }
+    public String getAuthorView(){
+        return String.join( ", ", author);
     }
     public String getCategory(){
         return category;
@@ -47,9 +70,19 @@ public class Article {
     public void setCreationDate(String creationDate){
         this.creationDate=creationDate;
     }
-    public void setAuthor(String author){
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public void setAuthor(ArrayList<String> author){
         this.author=author;
     }
+
+    public void setAuthorView(String authorView) {
+        this.authorView = authorView;
+    }
+
     public void setCategory(String category){
         this.category=category;
     }

@@ -17,6 +17,6 @@ public class Cabinet {
     }
 
     public ArrayList<Article> loadData() {
-        return LoadFileAndSetData.data_array("C:\\Users\\Dell\\Desktop\\OOPnhom6\\json\\blockchain (1).json");
+        return LoadFileAndSetData.data_array("C:\\Users\\Dell\\Desktop\\OOPnhom6\\json\\blockchainDigitaltrends (2).json");
     }
 }

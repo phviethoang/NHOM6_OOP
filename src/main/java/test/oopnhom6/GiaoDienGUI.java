@@ -1,10 +1,12 @@
 package test.oopnhom6;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
@@ -16,12 +18,21 @@ import java.io.IOException;
 public class GiaoDienGUI extends Application{
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root= FXMLLoader.load(getClass().getResource("homeScene.fxml"));
-        Scene scene = new Scene(root);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScene.fxml"));
+        Parent root= loader.load();
 
+        Scene scene = new Scene(root);
         stage.setTitle("Blockchains");
         stage.setScene(scene);
         stage.show();
+
+        ControllerGUI controller = loader.getController();
+        scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                controller.bigger();
+            }
+        });
         stage.setOnCloseRequest(event ->{
             event.consume();
             logout(stage);
