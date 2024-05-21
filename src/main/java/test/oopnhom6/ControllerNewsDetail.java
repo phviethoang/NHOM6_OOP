@@ -15,7 +15,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
-public class ControllerNewsDetail extends ControllerGUI {
+public class ControllerNewsDetail extends ControllerButton {
     @FXML
     Button homeButton;
     @FXML
@@ -29,44 +29,44 @@ public class ControllerNewsDetail extends ControllerGUI {
     Button newsButton;
     @FXML
     Button authorButton;
-    @FXML
-    void goHome(ActionEvent event) throws IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("homeScene.fxml"));
-        Scene scene = new Scene(root);
-        Stage primaryStage = (Stage)homeButton.getScene().getWindow();
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-    @FXML
-    void showNews(ActionEvent event) {
-       try {
-           FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScene.fxml"));          // Nạp root trước khi load controller
-           Parent root = loader.load();
-           ControllerGUI ctl = loader.getController();
-           Scene scene = new Scene(root);
-           Stage stage = (Stage) newsButton.getScene().getWindow();
-           stage.setScene(scene);
-           ctl.showNews(event);
-           stage.show();
-       }catch (Exception e){
-           System.out.println(e.getMessage());
-       }
-
-    }
-    void showAuthors(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScene.fxml"));          // Nạp root trước khi load controller
-            Parent root = loader.load();
-            ControllerGUI ctl = loader.getController();
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) authorButton.getScene().getWindow();
-            stage.setScene(scene);
-            ctl.showAuthors(event);
-            stage.show();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-    }
+//    @FXML
+//    void goHome(ActionEvent event) throws IOException{
+//        Parent root = FXMLLoader.load(getClass().getResource("homeScene.fxml"));
+//        Scene scene = new Scene(root);
+//        Stage primaryStage = (Stage)homeButton.getScene().getWindow();
+//        primaryStage.setScene(scene);
+//        primaryStage.show();
+//    }
+//    @FXML
+//    void showNews(ActionEvent event) {
+//       try {
+//           FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScene.fxml"));          // Nạp root trước khi load controller
+//           Parent root = loader.load();
+//           ControllerGUI ctl = loader.getController();
+//           Scene scene = new Scene(root);
+//           Stage stage = (Stage) newsButton.getScene().getWindow();
+//           stage.setScene(scene);
+//           ctl.showNews(event);
+//           stage.show();
+//       }catch (Exception e){
+//           System.out.println(e.getMessage());
+//       }
+//
+//    }
+//    void showAuthors(ActionEvent event) {
+//        try {
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScene.fxml"));          // Nạp root trước khi load controller
+//            Parent root = loader.load();
+//            ControllerGUI ctl = loader.getController();
+//            Scene scene = new Scene(root);
+//            Stage stage = (Stage) authorButton.getScene().getWindow();
+//            stage.setScene(scene);
+//            ctl.showAuthors(event);
+//            stage.show();
+//        }catch (Exception e){
+//            System.out.println(e.getMessage());
+//        }
+//    }
     @FXML
     void searchKeyword(KeyEvent event){
         try {

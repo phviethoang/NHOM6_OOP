@@ -18,16 +18,18 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.converter.LocalDateTimeStringConverter;
+
+import java.time.format.DateTimeFormatter;
+
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class ControllerGUI implements Initializable {
-    private Parent root;
-    private Stage stage;
-    private Scene scene;
+public class ControllerGUI extends ControllerButton implements Initializable {
     @FXML
     public AnchorPane scenePane;
     @FXML
@@ -116,14 +118,14 @@ public class ControllerGUI implements Initializable {
             System.out.println(e.getMessage());
         }
     }
-    @FXML
-    void scrollToFirst(ActionEvent event) {
-        tableNews.scrollTo(0);
-    }
-    @FXML
-    void scrollToLast(ActionEvent event) {
-        tableNews.scrollTo(500);
-    }
+//    @FXML
+//    void scrollToFirst(ActionEvent event) {
+//        tableNews.scrollTo(0);
+//    }
+//    @FXML
+//    void scrollToLast(ActionEvent event) {
+//        tableNews.scrollTo(500);
+//    }
 //    @FXML
 //    void showNews(ActionEvent event) throws IOException{
 //        c.setBox(LoadFileAndSetData
@@ -136,7 +138,7 @@ public class ControllerGUI implements Initializable {
 //        // String s = LoadFileAndSetData.read_data("blockchain.json");
 //    }
     @FXML
-    void showNews(ActionEvent event) throws IOException{
+    void showNews(ActionEvent event){
 //        tableNews.setVisible(true);
         MakeTableView.makeTableNews(tableNews);
         searchText.clear();
@@ -148,15 +150,7 @@ public class ControllerGUI implements Initializable {
         }
         tableNews.setItems(lst);
     }
-    @FXML
-    void showTrendings(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("trendingScene.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) trendButton.getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
-    }
+
     @FXML
     void showAuthors(ActionEvent event){
         MakeTableView.makeTableAuthor(tableNews);
@@ -177,20 +171,24 @@ public class ControllerGUI implements Initializable {
 //        }
 //        tableNews.setItems(lst);
     }
-    @FXML
-    void showHistory(ActionEvent event){
-
-    }
-    public void exitApp(ActionEvent event){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Exit");
-        alert.setHeaderText("You're about to exit the application!");
-        alert.setContentText("Have you made sure to close it? ");
-        if(alert.showAndWait().get() == ButtonType.OK){
-            stage = (Stage) scenePane.getScene().getWindow();
-            stage.close();
-        }
-    }
+//    @FXML
+//    void showHistory(ActionEvent event) throws IOException {
+//       Parent root = FXMLLoader.load(getClass().getResource("historyScene.fxml"));
+//       Scene scene = new Scene(root);
+//       Stage stage = (Stage) historyButton.getScene().getWindow();
+//       stage.setScene(scene);
+//       stage.show();
+//    }
+//    public void exitApp(ActionEvent event){
+//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//        alert.setTitle("Exit");
+//        alert.setHeaderText("You're about to exit the application!");
+//        alert.setContentText("Have you made sure to close it? ");
+//        if(alert.showAndWait().get() == ButtonType.OK){
+//           Stage stage = (Stage) scenePane.getScene().getWindow();
+//            stage.close();
+//        }
+//    }
     @FXML
     void searching(ActionEvent event) {
 
@@ -199,9 +197,14 @@ public class ControllerGUI implements Initializable {
     void detailNews(MouseEvent event) {
         try {
             if (event.getClickCount() == 2) {
+                FXMLLoader loaderHistory = new FXMLLoader(getClass().getResource("historyScene.fxml"));
+                Parent root0=loaderHistory.load();
+                ControllerHistory controllerHistory = loaderHistory.getController();
                 if(c.getBox()!=null){
                     General u = tableNews.getSelectionModel().getSelectedItem();
                     if(u!=null){
+                        HistoryObject historyObject = new HistoryObject(u);
+                        controllerHistory.setTableHistory(historyObject);
                         setData(u,c.getBox());
                     }
                 }
@@ -211,6 +214,13 @@ public class ControllerGUI implements Initializable {
                     ControllerAuthorDetail ctl = loader.getController();
                     General g= tableNews.getSelectionModel().getSelectedItem();
                     if(g instanceof Author a){
+
+                        FXMLLoader loaderHistory1 = new FXMLLoader(getClass().getResource("historyScene.fxml"));
+                        loaderHistory1.load();
+                        HistoryObject historyObject = new HistoryObject(a);
+                        ControllerHistory controllerHistory1 = loaderHistory1.getController();
+                        controllerHistory1.setTableHistory(historyObject);
+
                         String name=a.getGeneralName();
                         ctl.setLabel(name);
                         ctl.displayDetailAuthor(a);
@@ -259,27 +269,7 @@ public class ControllerGUI implements Initializable {
 //        }
     }
 
-    void bigger(){
-//        Animation a0 = new Animation();
-//        Animation a1 = new Animation();
-//        Animation a2 = new Animation();
-//        Animation a3 = new Animation();
-//        Animation a4 = new Animation();
-//        Animation a5 = new Animation();
-//        Animation a6 = new Animation();
-//        Animation a7 = new Animation();
-//        Animation a8 = new Animation();
-//
-//        a0.setBigger(trendButton);
-//        a1.setBigger(authorButton);
-//        a2.setBigger(exitButton);
-//        a3.setBigger(firstButton);
-//        a4.setBigger(historyButton);
-//        a5.setBigger(homeButton);
-//        a6.setBigger(lastButton);
-//        a7.setBigger(memberButton);
-//        a8.setBigger(newsButton);
-    }
+
 
 
 

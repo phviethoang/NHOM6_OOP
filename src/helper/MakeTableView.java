@@ -3,6 +3,7 @@ package helper;
 import data.Article;
 import data.Author;
 import data.General;
+import data.HistoryObject;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.TableColumn;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class MakeTableView {
+    public static String word;
     public static void makeTableNews(TableView<General> tableView){
         clearTable(tableView);
         tableView.setVisible(true);
@@ -96,6 +98,7 @@ public class MakeTableView {
         colName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getKey()));
         colCount.setCellValueFactory(cellData->new SimpleStringProperty(cellData.getValue().getValue()));
         colCount.setCellFactory(new CenterAlignedCellFactory<>());
+        word=colName.getText();
     }
     public static void makeTableCategoryTrending(TableView<Pair<String,String>> tableView){
         clearTable(tableView);
@@ -115,6 +118,7 @@ public class MakeTableView {
         colName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getKey()));
         colCount.setCellValueFactory(cellData->new SimpleStringProperty(cellData.getValue().getValue()));
         colCount.setCellFactory(new CenterAlignedCellFactory<>());
+        word=colName.getText();
     }
     public static void makeTableHashtagTrending(TableView<Pair<String,String>> tableView){
         clearTable(tableView);
@@ -134,6 +138,29 @@ public class MakeTableView {
         colName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getKey()));
         colCount.setCellValueFactory(cellData->new SimpleStringProperty(cellData.getValue().getValue()));
         colCount.setCellFactory(new CenterAlignedCellFactory<>());
+        word=colName.getText();
+    }
+
+    public static void makeTableHistory(TableView<HistoryObject> tableView){
+        clearTable(tableView);
+        tableView.setVisible(true);
+        TableColumn<HistoryObject, String> colDateTime = new TableColumn<>("Date time");
+        TableColumn<HistoryObject, String> colName = new TableColumn<>("Item");
+        TableColumn<HistoryObject, String> colType = new TableColumn<>("Type");
+        colDateTime.setPrefWidth(75);
+        colName.setPrefWidth(326.39996337890625);
+        tableView.getColumns().addAll(colName, colType, colDateTime);
+        colDateTime.setCellValueFactory(new PropertyValueFactory<>("time"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("item"));
+        colType.setCellValueFactory(new PropertyValueFactory<>("typeOfObject"));
+        colDateTime.setCellFactory(new CenterAlignedCellFactory<>());
+        colDateTime.setCellFactory(new CenterAlignedCellFactory<>());
+        colName.setCellFactory(new CenterAlignedCellFactory<>());
+
+    }
+
+    public String getColumnName(String word){
+        return word;
     }
 
     public static void clearTable(TableView<?> tableView) {

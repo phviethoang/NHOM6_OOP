@@ -23,8 +23,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Stack;
 
-public class ControllerTrending extends ControllerGUI implements Initializable {
+public class ControllerTrending extends ControllerButton implements Initializable {
 
     @FXML
     private Button author;
@@ -68,17 +69,24 @@ public class ControllerTrending extends ControllerGUI implements Initializable {
     @FXML
     private Button upButton;
     @FXML
+    private Button backButton;
+    @FXML
     private Label label;
     @FXML
     private TableView<Pair<String,String>> tableView;
+    private String keyword;
 
     Cabinet c = new Cabinet();
     AuthorCabinet ac=new AuthorCabinet();
 
+    public static Stack<PrevState> prev = new Stack();
+
+
     String currentIndex;
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        currentIndex="A";
+        //currentIndex="A";
+        //prev.push(new PrevState(tableView.getColumns().get(1).getText(), tableView.getColumns().get(1).getText(), tableView.getItems()));
         this.c.setBox(LoadFileAndSetData
                 .data_array("C:\\Users\\Dell\\Desktop\\OOPnhom6\\json\\blockchainDigitaltrends (2).json"));
         this.ac.setAuthorBox(LoadFileAndSetData.data_author("C:\\Users\\Dell\\Desktop\\OOPnhom6\\json\\authorsDigitalTrends.json"));
@@ -106,9 +114,10 @@ public class ControllerTrending extends ControllerGUI implements Initializable {
             for (Map.Entry<String, String> entry : map.entrySet()) {
                 list.add(new Pair<>(entry.getKey(), entry.getValue()));
             }
+            save();
             tableView.setItems(list);
             label.setText("TOP 10 POPULAR AUTHORS");
-            currentIndex = "A";
+         //   currentIndex = "A";
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -123,9 +132,10 @@ public class ControllerTrending extends ControllerGUI implements Initializable {
             for (Map.Entry<String, String> entry : map.entrySet()) {
                 list.add(new Pair<>(entry.getKey(), entry.getValue()));
             }
+            save();
             tableView.setItems(list);
             label.setText("TOP 10 POPULAR CATEGORIES");
-            currentIndex = "B";
+        //    currentIndex = "B";
         }catch (Exception e){
 
         }
@@ -140,11 +150,34 @@ public class ControllerTrending extends ControllerGUI implements Initializable {
             for (Map.Entry<String, String> entry : map.entrySet()) {
                 list.add(new Pair<>(entry.getKey(), entry.getValue()));
             }
+            save();
             tableView.setItems(list);
             label.setText("TOP 10 POPULAR HASHTAGS");
-            currentIndex = "B";
+        //    currentIndex = "B";
         }catch (Exception e){
 
+        }
+    }
+    @FXML
+    void back(ActionEvent event){
+//        if(!prev.isEmpty())
+//            tableView.setItems(prev.peek());
+//        System.out.println(currentIndex);
+//        if(currentIndex.equals("B")){
+//            tableView.getColumns().get(1).setText("Category");
+//            tableView.getColumns().get(2).setText("Number of articles");
+//        }
+//        if(currentIndex.equals("C")){
+//            tableView.getColumns().get(1).setText("Hashtag");
+//            tableView.getColumns().get(2).setText("Number of occurrences");
+//        }
+
+        if(!prev.isEmpty()) {
+            PrevState pS = prev.pop();
+
+            tableView.getColumns().get(1).setText(pS.getCol1());
+            tableView.getColumns().get(2).setText(pS.getCol2());
+            tableView.setItems(pS.getObservableList());
         }
     }
 
@@ -152,14 +185,28 @@ public class ControllerTrending extends ControllerGUI implements Initializable {
 //    void display(KeyEvent event) {
 //
 //    }
+    public void save(){
+        //prev.push(tableView.getItems());
+        prev.push(new PrevState(tableView.getColumns().get(1).getText(), tableView.getColumns().get(2).getText(), tableView.getItems()));
+    }
 @FXML
 void showDetails(MouseEvent event) {
     try {
+        save();
+        FXMLLoader loaderHistory = new FXMLLoader(getClass().getResource("historyScene.fxml"));
+        loaderHistory.load();
+        ControllerHistory controllerHistory = loaderHistory.getController();
+        String currActivity = tableView.getColumns().get(1).getText();
         if(event.getClickCount()==2) {
-            if (currentIndex.equals("A")) {
+            if (currActivity.equals("Name")) {
                 String keyword = tableView.getSelectionModel().getSelectedItem().getKey();
+
                 for (int i = 0; i < ac.getAuthorBox().size(); i++) {
                     if (keyword.equals(ac.getAuthorBox().get(i).getName())) {
+
+                        HistoryObject historyObject = new HistoryObject(ac.getAuthorBox().get(i));
+                        controllerHistory.setTableHistory(historyObject);
+
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("DetailAuthor.fxml"));
                         Parent root = loader.load();
                         ControllerAuthorDetail ctl = loader.getController();
@@ -173,18 +220,36 @@ void showDetails(MouseEvent event) {
                         break;
                     }
                 }
-            } else if (currentIndex.equals("B")) {
+            } else if (currActivity.equals("Category")) {
+                String keyword = tableView.getSelectionModel().getSelectedItem().getKey();
+                ObservableList<Pair<String,String>> list = FXCollections.observableArrayList();
+                for (Article x : SearchAndSort.searchForTrends(keyword, c.getBox())) {
+                    list.add(new Pair<>(x.getTitle(), x.getAuthorView()));
+                }
+
+                tableView.getColumns().get(1).setText("Article");
+                tableView.getColumns().get(2).setText("Author");
+                tableView.setItems(list);
+
+            }else if(currActivity.equals("Hashtag")){
                 String keyword = tableView.getSelectionModel().getSelectedItem().getKey();
                 ObservableList<Pair<String,String>> list = FXCollections.observableArrayList();
                 for (Article x : SearchAndSort.searchForTrends(keyword, c.getBox())) {
                     list.add(new Pair<>(x.getTitle(),x.getAuthorView()));
                 }
-                currentIndex = "C";
+
+                tableView.getColumns().get(1).setText("Article");
+                tableView.getColumns().get(2).setText("Author");
                 tableView.setItems(list);
-            } else if (currentIndex.equals("C")) {
+            }
+            else if (currActivity.equals("Article")) {
                 String keyword = tableView.getSelectionModel().getSelectedItem().getKey();
                 for (Article x : c.getBox()) {
                     if (keyword.equals(x.getTitle())) {
+
+                        HistoryObject historyObject = new HistoryObject(x);
+                        controllerHistory.setTableHistory(historyObject);
+
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("DetailNews.fxml"));
                         Parent root = loader.load();
                         ControllerNewsDetail ctl = loader.getController();
@@ -202,7 +267,24 @@ void showDetails(MouseEvent event) {
         System.out.println(e.getMessage());
     }
 
-//    if(event.getClickCount() == 2) {
+//
+}
+
+@FXML
+    void search(KeyEvent keyEvent) {
+
+}
+
+//    @FXML
+//    void goHome(ActionEvent event) throws IOException {
+//        Parent root = FXMLLoader.load(getClass().getResource("homeScene.fxml"));
+//        Scene scene = new Scene(root);
+//        Stage primaryStage = (Stage)homeButton.getScene().getWindow();
+//        primaryStage.setScene(scene);
+//        primaryStage.show();
+//    }
+}
+// if(event.getClickCount() == 2) {
 //        if(currentIndex == "A") {
 //            String keyword = tableView.getSelectionModel().getSelectedItem().getKey();
 //            ObservableList<String> lst = FXCollections.observableArrayList();
@@ -229,13 +311,3 @@ void showDetails(MouseEvent event) {
 //            }
 //
 //        }
-}
-    @FXML
-    void goHome(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("homeScene.fxml"));
-        Scene scene = new Scene(root);
-        Stage primaryStage = (Stage)homeButton.getScene().getWindow();
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-}

@@ -26,13 +26,6 @@ public class GiaoDienGUI extends Application{
         stage.setScene(scene);
         stage.show();
 
-        ControllerGUI controller = loader.getController();
-        scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                controller.bigger();
-            }
-        });
         stage.setOnCloseRequest(event ->{
             event.consume();
             logout(stage);
