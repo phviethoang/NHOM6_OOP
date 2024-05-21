@@ -35,9 +35,20 @@ public class Author implements General {
     }
 
     @Override
+    public String getGeneralTags() {
+        return null;
+    }
+
+    @Override
+    public String getGeneralCategory() {
+        return null;
+    }
+
+    @Override
     public String getGeneralTitle() {
         return null;
     }
+
 
 
     public void setDetail(String detail) {

@@ -7,6 +7,7 @@ import helper.SearchAndSort;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -39,6 +40,9 @@ public class ControllerAuthorDetail extends ControllerButton{
     Cabinet c=new Cabinet();
     AuthorCabinet ac=new AuthorCabinet();
 
+    // danh sach fixList la danh sach bai bao cua 1 tac gia; searchList la list hien thi len man hinh
+    ObservableList<Article> fixedList = FXCollections.observableArrayList();
+
     public void setLabel(String name){
         label.setText(name);
 
@@ -52,7 +56,7 @@ public class ControllerAuthorDetail extends ControllerButton{
     }
 
     @FXML
-    void searchAuthorArticle(KeyEvent event){
+    void search(KeyEvent event){
         if(c.getBox()!=null){
             String search = searchText.getText();
             ObservableList<Article> obs = FXCollections.observableArrayList();
@@ -69,15 +73,16 @@ public class ControllerAuthorDetail extends ControllerButton{
         MakeTableView.makeTableAuthorNews(tableNews);
         c.setBox(LoadFileAndSetData
                 .data_array("C:\\Users\\Dell\\Desktop\\OOPnhom6\\json\\blockchainDigitaltrends (2).json"));
-        ObservableList<Article> lst = FXCollections.observableArrayList();
+
         //System.out.println(authorName.getText());
         for (Article x : c.getBox()) {
             if(x.getAuthor().contains(label.getText())){
-                lst.add(x);
+                fixedList.add(x);
             }
         }
-        tableNews.setItems(lst);
+        tableNews.setItems(fixedList);
     }
+
     @FXML
     void displayDetailNews(MouseEvent event) throws IOException {
         if(event.getClickCount()==2){

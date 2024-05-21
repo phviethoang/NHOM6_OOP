@@ -3,6 +3,7 @@ package test.oopnhom6;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -271,8 +272,13 @@ void showDetails(MouseEvent event) {
 }
 
 @FXML
-    void search(KeyEvent keyEvent) {
-
+void search(KeyEvent keyEvent) {
+//        searchText.addEventHandler(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+//            @Override
+//            public void handle(KeyEvent keyEvent) {
+//                for
+//            }
+//        });
 }
 
 //    @FXML

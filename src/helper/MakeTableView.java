@@ -38,7 +38,7 @@ public class MakeTableView {
         );
         colID.setCellFactory(new CenterAlignedCellFactory<>());
         colName.setCellValueFactory(new PropertyValueFactory<>("generalTitle"));
-        colAuthor.setCellValueFactory(new PropertyValueFactory<>("generalAuthor"));
+        colAuthor.setCellValueFactory(new PropertyValueFactory<>("authorView"));
     }
     public static void makeTableAuthor(TableView<General> tableView){
         clearTable(tableView);

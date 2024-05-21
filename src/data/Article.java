@@ -38,9 +38,18 @@ public class Article implements General{
     public String getGeneralName() {
         return null;
     }
+
     @Override
+    public String getGeneralTags() {
+        return null;
+    }
     public String getGeneralAuthor(){
-        return String.join(", ", author);
+        return null;
+    }
+
+    @Override
+    public String getGeneralCategory() {
+        return null;
     }
     @Override
     public String getGeneralTitle(){return title;}

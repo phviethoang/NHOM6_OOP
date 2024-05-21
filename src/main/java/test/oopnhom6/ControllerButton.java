@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ControllerButton {
+public abstract class ControllerButton {
     @FXML
     private Button homeButton;
     @FXML
@@ -42,7 +42,8 @@ public class ControllerButton {
     @FXML
     void showNews(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScene.fxml"));          // Nạp root trước khi load controller
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScene.fxml"));
+            // Nạp root trước khi load controller
             Parent root = loader.load();
             ControllerGUI ctl = loader.getController();
             Scene scene = new Scene(root);

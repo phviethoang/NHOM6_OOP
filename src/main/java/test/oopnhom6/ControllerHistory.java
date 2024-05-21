@@ -6,6 +6,7 @@ import helper.MakeTableView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -29,7 +31,6 @@ public class ControllerHistory extends ControllerButton implements Initializable
     @FXML
     private Button homeButton;
     static ObservableList<HistoryObject> lst = FXCollections.observableArrayList();
-
     Cabinet c = new Cabinet();
     AuthorCabinet ac = new AuthorCabinet();
 
@@ -50,6 +51,25 @@ public class ControllerHistory extends ControllerButton implements Initializable
         lst.add(object);
     }
 
+    @FXML
+    void search(KeyEvent keyEvent){
+        searchText.addEventHandler(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                String keyword = searchText.getText();
+                ObservableList<HistoryObject> showSearchingList = FXCollections.observableArrayList();
+
+                for( HistoryObject i : ControllerHistory.lst)
+                {
+                    if(i.getItem().contains(keyword))
+                    {
+                        showSearchingList.add(i);
+                        tableHistory.setItems(showSearchingList);
+                    }
+                }
+            }
+        });
+    }
     @FXML
     void detailNews(MouseEvent mouseEvent) throws IOException {
         String keyword = tableHistory.getSelectionModel().getSelectedItem().getItem();
@@ -101,6 +121,5 @@ public class ControllerHistory extends ControllerButton implements Initializable
                 }
             }
         }
-
     }
 }
