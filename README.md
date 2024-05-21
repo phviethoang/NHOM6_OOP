@@ -1,0 +1,1 @@
+Project phiên bản sắp hoàn thiện, thiếu history, nút back, 1 số hiệu ứng và font chữ, thiếu 1 button để sort các mục(còn thgian thì làm) và 1 số lỗi nhỏ khác. Mọi người clone về và bắt đầu làm báo cáo/
