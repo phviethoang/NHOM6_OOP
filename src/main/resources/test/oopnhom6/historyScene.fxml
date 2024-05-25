@@ -21,81 +21,6 @@
                 </Label>
             </children>
         </AnchorPane>
-        <AnchorPane layoutY="92.0" prefHeight="412.0" prefWidth="184.0" style="-fx-background-color: #1b0661;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="92.0">
-            <children>
-                <Button fx:id="exitButton" layoutX="14.0" layoutY="371.0" mnemonicParsing="false" onAction="#exitApp" prefHeight="30.0" prefWidth="168.0" text="EXIT" AnchorPane.bottomAnchor="10.600000000000001">
-                    <font>
-                        <Font name="System Bold" size="14.0" />
-                    </font>
-                </Button>
-                <Button fx:id="homeButton" layoutY="33.0" mnemonicParsing="false" onAction="#goHome" prefHeight="38.0" prefWidth="192.0" style="-fx-background-color: #1b0661;" text="Home" textFill="#f4f4f4">
-                    <font>
-                        <Font name="System Bold" size="17.0" />
-                    </font>
-                    <graphic>
-                        <ImageView fx:id="homeImage" fitHeight="26.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-
-                        <Image url="@image/Home-icon.png" />
-                     </ImageView>
-                    </graphic>
-                </Button>
-                <Button fx:id="newsButton" layoutX="1.0" layoutY="70.0" mnemonicParsing="false" onAction="#showNews" prefHeight="43.0" prefWidth="192.0" style="-fx-background-color: #1b0661;" text="News" textFill="#f4f4f4">
-                    <font>
-                        <Font name="System Bold" size="17.0" />
-                    </font>
-                    <graphic>
-                        <ImageView blendMode="SCREEN" fitHeight="43.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
-
-                        <Image url="@image/News-icon.jpg" />
-                     </ImageView>
-                    </graphic>
-                </Button>
-                <Button fx:id="trendButton" layoutX="-1.0" layoutY="110.0" mnemonicParsing="false" onAction="#showTrendings" prefHeight="42.0" prefWidth="194.0" style="-fx-background-color: #1b0661;" text="Trendings" textFill="#f4f4f4">
-                    <font>
-                        <Font name="System Bold" size="17.0" />
-                    </font>
-                    <graphic>
-                        <ImageView blendMode="SCREEN" fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-
-                        <Image url="@image/trendings.jpg" />
-                     </ImageView>
-                    </graphic>
-                </Button>
-                <Button fx:id="authorButton" layoutX="-2.0" layoutY="153.0" mnemonicParsing="false" onAction="#showHomeAuthors" prefHeight="38.0" prefWidth="194.0" style="-fx-background-color: #1b0661;" text="Authors" textFill="#f4f4f4">
-                    <font>
-                        <Font name="System Bold" size="17.0" />
-                    </font>
-                    <graphic>
-                        <ImageView blendMode="SCREEN" fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
-
-                        <Image url="@image/authors-icon.jpg" />
-                     </ImageView>
-                    </graphic>
-                </Button>
-                <Button fx:id="historyButton" layoutX="1.0" layoutY="195.0" mnemonicParsing="false" onAction="#showHistory" prefHeight="40.0" prefWidth="192.0" style="-fx-background-color: #1b0661;" text="History" textFill="#f4f4f4">
-                    <font>
-                        <Font name="System Bold" size="17.0" />
-                    </font>
-                    <graphic>
-                        <ImageView blendMode="SCREEN" fitHeight="32.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
-
-                        <Image url="@image/History.png" />
-                     </ImageView>
-                    </graphic>
-                </Button>
-                <Button fx:id="memberButton" layoutX="1.0" layoutY="240.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="192.0" style="-fx-background-color: #1b0661;" text="About us" textFill="#f4f4f4">
-                    <font>
-                        <Font name="System Bold" size="17.0" />
-                    </font>
-                    <graphic>
-                        <ImageView blendMode="LIGHTEN" fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
-
-                        <Image url="@image/Member-icon.jpg" />
-                     </ImageView>
-                    </graphic>
-                </Button>
-            </children>
-        </AnchorPane>
         <HBox layoutX="233.0" layoutY="36.0" prefHeight="28.0" prefWidth="468.0" AnchorPane.bottomAnchor="436.0" AnchorPane.leftAnchor="233.20000000000005" AnchorPane.rightAnchor="68.39999999999998" AnchorPane.topAnchor="36.0">
             <children>
                 <TextField fx:id="searchText" onKeyTyped="#search" prefHeight="35.0" prefWidth="566.0" promptText="Searching here" />
@@ -149,5 +74,87 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
+      <AnchorPane layoutY="92.0" prefHeight="484.0" prefWidth="184.0" style="-fx-background-color: #1b0661;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="92.0">
+         <children>
+            <Button fx:id="exitButton" layoutX="14.0" layoutY="371.0" mnemonicParsing="false" onAction="#exitApp" prefHeight="30.0" prefWidth="168.0" text="EXIT" AnchorPane.bottomAnchor="10.600000000000001">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="homeButton" layoutY="33.0" mnemonicParsing="false" onAction="#goHome" prefHeight="38.0" prefWidth="192.0" style="-fx-background-color: #1b0661;" text="Home" textFill="#f4f4f4">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+               <graphic>
+                  <ImageView fx:id="homeImage" fitHeight="26.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@image/Home-icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="newsButton" layoutY="78.0" mnemonicParsing="false" onAction="#showNews" prefHeight="43.0" prefWidth="192.0" style="-fx-background-color: #1b0661;" text="News" textFill="#f4f4f4">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+               <graphic>
+                  <ImageView blendMode="SCREEN" fitHeight="43.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@image/News-icon.jpg" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="trendButton" layoutY="128.0" mnemonicParsing="false" onAction="#showTrendings" prefHeight="42.0" prefWidth="194.0" style="-fx-background-color: #1b0661;" text="Trendings" textFill="#f4f4f4">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+               <graphic>
+                  <ImageView blendMode="SCREEN" fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@image/trendings.jpg" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="authorButton" layoutY="177.0" mnemonicParsing="false" onAction="#showHomeAuthors" prefHeight="38.0" prefWidth="194.0" style="-fx-background-color: #1b0661;" text="Authors" textFill="#f4f4f4">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+               <graphic>
+                  <ImageView blendMode="SCREEN" fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@image/authors-icon.jpg" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="historyButton" layoutY="222.0" mnemonicParsing="false" onAction="#showHistory" prefHeight="40.0" prefWidth="192.0" style="-fx-background-color: #1b0661;" text="History" textFill="#f4f4f4">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+               <graphic>
+                  <ImageView blendMode="SCREEN" fitHeight="32.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@image/History.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="memberButton" layoutY="268.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="192.0" style="-fx-background-color: #1b0661;" text="About us" textFill="#f4f4f4">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+               <graphic>
+                  <ImageView blendMode="LIGHTEN" fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@image/Member-icon.jpg" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
+      <Button fx:id="backButton" layoutX="195.0" layoutY="67.0" mnemonicParsing="false" onAction="#back" text="Back" />
     </children>
 </AnchorPane>

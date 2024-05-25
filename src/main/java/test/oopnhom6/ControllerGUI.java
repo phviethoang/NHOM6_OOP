@@ -2,8 +2,8 @@ package test.oopnhom6;
 
 import data.*;
 import helper.LoadFileAndSetData;
-import helper.MakeTableView;
 import helper.SearchAndSort;
+import helper.Table;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,14 +18,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.util.converter.LocalDateTimeStringConverter;
-
-import java.time.format.DateTimeFormatter;
 
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -70,6 +66,7 @@ public class ControllerGUI extends ControllerButton implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if(tableNews!=null) tableNews.setVisible(false);
+        makeHighlight();
     }
     @FXML
     void home(ActionEvent event){
@@ -109,7 +106,7 @@ public class ControllerGUI extends ControllerButton implements Initializable {
             if(ac.getAuthorBox()!=null){
                 String search = searchText.getText();
                 ObservableList<General> obs = FXCollections.observableArrayList();
-                for (Author x : SearchAndSort.searchAuthor(search, ac.getAuthorBox())) {
+                for (Author x : ac.searchAuthor(search, ac.getAuthorBox())) {
                     obs.addAll(x);
                 }
                 tableNews.setItems(obs);
@@ -137,13 +134,18 @@ public class ControllerGUI extends ControllerButton implements Initializable {
 //        listNews.setItems(lst);
 //        // String s = LoadFileAndSetData.read_data("blockchain.json");
 //    }
+
+
     @FXML
     void showNews(ActionEvent event){
 //        tableNews.setVisible(true);
-        MakeTableView.makeTableNews(tableNews);
+        Table<General> table = new Table<>(tableNews);
+        TableColumn<General, Integer> colID = table.columnID(68);
+        TableColumn<General, String> colName = table.newColumn("Name", "generalTitle",487.20001220703125, false );
+        TableColumn<General, String> colAuthor = table.newColumn("Author", "authorView", false );
+        table.addColumn(colID, colName,colAuthor);
         searchText.clear();
-        c.setBox(LoadFileAndSetData
-                .data_array("C:\\Users\\Dell\\Desktop\\OOPnhom6\\json\\blockchainDigitaltrends (2).json"));
+        c.setBox(c.loadData());
         ObservableList<General> lst = FXCollections.observableArrayList();
         for (Article x : c.getBox()) {
              lst.add(x);
@@ -153,10 +155,12 @@ public class ControllerGUI extends ControllerButton implements Initializable {
 
     @FXML
     void showAuthors(ActionEvent event){
-        MakeTableView.makeTableAuthor(tableNews);
+        Table<General> table = new Table<>(tableNews);
+        TableColumn<General, Integer> colID = table.columnID(68);
+        TableColumn<General, String> colName = table.newColumn("Name", "generalName",487.20001220703125, true );
+        table.addColumn(colID, colName);
         searchText.clear();
-        ac.setAuthorBox(LoadFileAndSetData
-                .data_author("C:\\Users\\Dell\\Desktop\\OOPnhom6\\json\\authorsDigitalTrends.json"));
+        ac.setAuthorBox(ac.fullAuthorList());
         ObservableList<General> lst = FXCollections.observableArrayList();
         for (Author x : ac.getAuthorBox()) {
             lst.add(x);
@@ -197,6 +201,8 @@ public class ControllerGUI extends ControllerButton implements Initializable {
     void detailNews(MouseEvent event) {
         try {
             if (event.getClickCount() == 2) {
+                LoadFileAndSetData.prevScene.push(authorButton.getScene());
+
                 FXMLLoader loaderHistory = new FXMLLoader(getClass().getResource("historyScene.fxml"));
                 Parent root0=loaderHistory.load();
                 ControllerHistory controllerHistory = loaderHistory.getController();

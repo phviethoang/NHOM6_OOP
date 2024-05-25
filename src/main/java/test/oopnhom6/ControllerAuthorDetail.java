@@ -2,12 +2,10 @@ package test.oopnhom6;
 
 import data.*;
 import helper.LoadFileAndSetData;
-import helper.MakeTableView;
 import helper.SearchAndSort;
+import helper.Table;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,10 +18,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class ControllerAuthorDetail extends ControllerButton{
+public class ControllerAuthorDetail extends ControllerButton implements Initializable {
     @FXML
     private Button homeButton;
     @FXML
@@ -36,12 +34,19 @@ public class ControllerAuthorDetail extends ControllerButton{
     private TextField searchText;
     @FXML
     private Label label;
+    @FXML
+    private Button backButton;
 
     Cabinet c=new Cabinet();
     AuthorCabinet ac=new AuthorCabinet();
 
     // danh sach fixList la danh sach bai bao cua 1 tac gia; searchList la list hien thi len man hinh
     ObservableList<Article> fixedList = FXCollections.observableArrayList();
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        makeHighlight();
+    }
 
     public void setLabel(String name){
         label.setText(name);
@@ -54,6 +59,8 @@ public class ControllerAuthorDetail extends ControllerButton{
         textArea.appendText("   Work: "+a.getJob()+"\n");
         textArea.appendText("   Biography: "+a.getDetail()+"\n");
     }
+    @FXML
+    void back(){}
 
     @FXML
     void search(KeyEvent event){
@@ -70,9 +77,12 @@ public class ControllerAuthorDetail extends ControllerButton{
     }
 
     void showAuthorArticle(){
-        MakeTableView.makeTableAuthorNews(tableNews);
-        c.setBox(LoadFileAndSetData
-                .data_array("C:\\Users\\Dell\\Desktop\\OOPnhom6\\json\\blockchainDigitaltrends (2).json"));
+        Table<Article> table = new Table<>(tableNews);
+        TableColumn<Article, Integer> colID = table.columnID(68);
+        TableColumn<Article, String> colName = table.newColumn("Name", "title",487.20001220703125, true );
+        TableColumn<Article, ArrayList<String>> colDate = table.newColumn("Creation date", "creationDate",114.4000244140625, true );
+        table.addColumn(colID, colName, colDate);
+        c.setBox(c.loadData());
 
         //System.out.println(authorName.getText());
         for (Article x : c.getBox()) {
@@ -99,7 +109,7 @@ public class ControllerAuthorDetail extends ControllerButton{
                         if(keyword.equals(x.getTitle())) {
                             HistoryObject historyObject = new HistoryObject(x);
                             controllerHistory.setTableHistory(historyObject);
-
+                            LoadFileAndSetData.prevScene.push(label.getScene());
                             FXMLLoader loader = new FXMLLoader(getClass().getResource("DetailNews.fxml"));
                             Parent root = loader.load();
                             ControllerNewsDetail ctl = loader.getController();

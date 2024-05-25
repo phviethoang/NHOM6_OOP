@@ -13,6 +13,9 @@ import java.util.regex.Pattern;
 import data.Article;
 import data.Author;
 import javafx.scene.control.TextArea;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 public class SearchAndSort {
     public static ArrayList<Article> searchForTrends(String keyword, ArrayList<Article> Articles) {
@@ -38,23 +41,25 @@ public class SearchAndSort {
         }
         return result;
     }
-    public static ArrayList<Author> searchAuthor(String keyword, ArrayList<Author> x) {
-        ArrayList<Author> result = new ArrayList<>();
-        for (Author auth : x) {
-            if (auth.getName().toLowerCase().contains(keyword.toLowerCase())) {
-                result.add(auth);
-            }
-        }
-        return result;
+//    public static ArrayList<Author> searchAuthor(String keyword, ArrayList<Author> x) {
+//        ArrayList<Author> result = new ArrayList<>();
+//        for (Author auth : x) {
+//            if (auth.getName().toLowerCase().contains(keyword.toLowerCase())) {
+//                result.add(auth);
+//            }
+//        }
+//        return result;
+//    }
+    public static void searchTextArea(TextArea textArea, String searchText) {
+ //       String content = textArea.getText().toLowerCase();
+//        textArea.setStyle("-fx-highlight-fill: lightgray; -fx-highlight-text-fill: firebrick;");
+//        textArea.deselect();
+//        int index = content.length();
+//        while ((index = content.lastIndexOf(searchText.toLowerCase(), index - 1)) >= 0) {
+//            textArea.selectRange(index, index + searchText.length());
+//        }
     }
-    public static void searchTextArea(TextArea textArea, String searchText){
-        String content = textArea.getText().toLowerCase();
-        textArea.setStyle("-fx-highlight-fill: lightgray; -fx-highlight-text-fill: firebrick;");
-        textArea.deselect();
-        int index = content.length();
-        while ((index = content.lastIndexOf(searchText.toLowerCase(), index - 1)) >= 0) {
-            textArea.selectRange(index, index + searchText.length());
-        }
+
 
 //        int lastIndex = content.length();
 //        while (lastIndex >= 0) {
@@ -89,7 +94,7 @@ public class SearchAndSort {
 //        if(index >= 0 && !searchText.isEmpty()) {
 //            textArea.selectRange(index, index + searchText.length());
 //        }
-    }
+
     public static ArrayList<Author> searchForAuthors(String keyword, ArrayList<Author> Authors) {
         ArrayList<Author> res = new ArrayList<>();
         for (Author x : Authors) {

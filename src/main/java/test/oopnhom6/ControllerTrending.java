@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import data.*;
 import helper.*;
 import javafx.util.Pair;
+import service.Animation;
 
 import java.io.IOException;
 import java.net.URL;
@@ -48,6 +49,14 @@ public class ControllerTrending extends ControllerButton implements Initializabl
 
     @FXML
     private Button homeButton;
+    @FXML
+    private Button newsButton;
+    @FXML
+    private Button authorButton;
+    @FXML
+    private Button historyButton;
+    @FXML
+    private Button memberButton;
 
     @FXML
     private ImageView homeImage;
@@ -81,6 +90,7 @@ public class ControllerTrending extends ControllerButton implements Initializabl
     AuthorCabinet ac=new AuthorCabinet();
 
     public static Stack<PrevState> prev = new Stack();
+    Animation animation =new Animation();
 
 
     String currentIndex;
@@ -88,9 +98,12 @@ public class ControllerTrending extends ControllerButton implements Initializabl
     public void initialize(URL arg0, ResourceBundle arg1) {
         //currentIndex="A";
         //prev.push(new PrevState(tableView.getColumns().get(1).getText(), tableView.getColumns().get(1).getText(), tableView.getItems()));
-        this.c.setBox(LoadFileAndSetData
-                .data_array("C:\\Users\\Dell\\Desktop\\OOPnhom6\\json\\blockchainDigitaltrends (2).json"));
-        this.ac.setAuthorBox(LoadFileAndSetData.data_author("C:\\Users\\Dell\\Desktop\\OOPnhom6\\json\\authorsDigitalTrends.json"));
+        this.c.setBox(c.loadData());
+        this.ac.setAuthorBox(ac.fullAuthorList());
+        makeHighlight();
+        animation.buttonHighlight(author);
+        animation.buttonHighlight(category);
+        animation.buttonHighlight(hashTag);
     }
 
 
@@ -109,8 +122,12 @@ public class ControllerTrending extends ControllerButton implements Initializabl
 //
 //        }
         try {
-            MakeTableView.makeTableAuthorTrending(tableView);
-            Map<String,String> map = LoadFileAndSetData.popularAuth(c.getBox());
+            Table<Pair<String, String>> table = new Table<>(tableView);
+            TableColumn<Pair<String, String>, Integer> colID = table.columnID(68);
+            TableColumn<Pair<String, String>, String> colName = table.newColumn("Name",402.39996337890625, true,"key" );
+            TableColumn<Pair<String, String>, String> colCount = table.newColumn("Number of articles contributed", true,"value" );
+            table.addColumn(colID, colName, colCount);
+            Map<String,String> map = ac.popularAuth(c.getBox());
             ObservableList<Pair<String, String>> list = FXCollections.observableArrayList();
             for (Map.Entry<String, String> entry : map.entrySet()) {
                 list.add(new Pair<>(entry.getKey(), entry.getValue()));
@@ -127,8 +144,12 @@ public class ControllerTrending extends ControllerButton implements Initializabl
     @FXML
     void showCategory(ActionEvent event) {
         try {
-            MakeTableView.makeTableCategoryTrending(tableView);
-            Map<String,String> map = LoadFileAndSetData.popularCategory(c.getBox());
+            Table<Pair<String, String>> table = new Table<>(tableView);
+            TableColumn<Pair<String, String>, Integer> colID = table.columnID(75);
+            TableColumn<Pair<String, String>, String> colName = table.newColumn("Category",460.39996337890625, true,"key" );
+            TableColumn<Pair<String, String>, String> colCount = table.newColumn("Number of articles", true,"value" );
+            table.addColumn(colID, colName, colCount);
+            Map<String,String> map = c.popularCategory(c.getBox());
             ObservableList<Pair<String, String>> list = FXCollections.observableArrayList();
             for (Map.Entry<String, String> entry : map.entrySet()) {
                 list.add(new Pair<>(entry.getKey(), entry.getValue()));
@@ -145,8 +166,12 @@ public class ControllerTrending extends ControllerButton implements Initializabl
     @FXML
     void showHashTag(ActionEvent event) {
         try {
-            MakeTableView.makeTableHashtagTrending(tableView);
-            Map<String,String> map = LoadFileAndSetData.popularTags(c.getBox());
+            Table<Pair<String, String>> table = new Table<>(tableView);
+            TableColumn<Pair<String, String>, Integer> colID = table.columnID(75);
+            TableColumn<Pair<String, String>, String> colName = table.newColumn("Hashtag",434.39996337890625, true,"key" );
+            TableColumn<Pair<String, String>, String> colCount = table.newColumn("Number of occurrences", true,"value" );
+            table.addColumn(colID, colName, colCount);
+            Map<String,String> map = c.popularTags(c.getBox());
             ObservableList<Pair<String, String>> list = FXCollections.observableArrayList();
             for (Map.Entry<String, String> entry : map.entrySet()) {
                 list.add(new Pair<>(entry.getKey(), entry.getValue()));
@@ -176,19 +201,40 @@ public class ControllerTrending extends ControllerButton implements Initializabl
         if(!prev.isEmpty()) {
             PrevState pS = prev.pop();
 
+//            if(pS.getCol1().equals("")) {
+//                tableView.getColumns().get(0).setText("");
+//            }
+            label.setText(pS.getTitleOfTable());
+            tableView.getColumns().get(0).setText(pS.getCol0());
             tableView.getColumns().get(1).setText(pS.getCol1());
             tableView.getColumns().get(2).setText(pS.getCol2());
             tableView.setItems(pS.getObservableList());
         }
+
+        else {
+            if(!LoadFileAndSetData.prevScene.isEmpty()) {
+                Stage stg = (Stage) trendButton.getScene().getWindow();
+                stg.setScene(LoadFileAndSetData.prevScene.peek());
+                LoadFileAndSetData.prevScene.pop();
+            }
+        }
     }
 
-//    @FXML
+    //    @FXML
 //    void display(KeyEvent event) {
 //
 //    }
     public void save(){
         //prev.push(tableView.getItems());
-        prev.push(new PrevState(tableView.getColumns().get(1).getText(), tableView.getColumns().get(2).getText(), tableView.getItems()));
+
+        if (tableView.getColumns().isEmpty()) {
+            ObservableList emptyList = FXCollections.observableArrayList();
+            prev.push(new PrevState("","", "", "", emptyList));
+        }
+
+        else{
+            prev.push(new PrevState(label.getText(), tableView.getColumns().get(0).getText(), tableView.getColumns().get(1).getText(), tableView.getColumns().get(2).getText(), FXCollections.observableArrayList(tableView.getItems())));
+        }
     }
 @FXML
 void showDetails(MouseEvent event) {
@@ -207,7 +253,7 @@ void showDetails(MouseEvent event) {
 
                         HistoryObject historyObject = new HistoryObject(ac.getAuthorBox().get(i));
                         controllerHistory.setTableHistory(historyObject);
-
+                        LoadFileAndSetData.prevScene.push(label.getScene());
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("DetailAuthor.fxml"));
                         Parent root = loader.load();
                         ControllerAuthorDetail ctl = loader.getController();
@@ -250,7 +296,7 @@ void showDetails(MouseEvent event) {
 
                         HistoryObject historyObject = new HistoryObject(x);
                         controllerHistory.setTableHistory(historyObject);
-
+                        LoadFileAndSetData.prevScene.push(label.getScene());
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("DetailNews.fxml"));
                         Parent root = loader.load();
                         ControllerNewsDetail ctl = loader.getController();

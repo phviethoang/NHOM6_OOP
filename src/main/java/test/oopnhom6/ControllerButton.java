@@ -1,8 +1,10 @@
 package test.oopnhom6;
 
+import helper.LoadFileAndSetData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -11,10 +13,13 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import service.Animation;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public abstract class ControllerButton {
+public abstract class ControllerButton implements Initializable {
     @FXML
     private Button homeButton;
     @FXML
@@ -26,9 +31,27 @@ public abstract class ControllerButton {
     @FXML
     private Button historyButton;
     @FXML
+    private Button exitButton;
+    @FXML
+    private Button memberButton;
+    @FXML
     private TableView tableNews;
     @FXML
     private AnchorPane scenePane;
+    @FXML
+    private Button backButton;
+    Animation animation=new Animation();
+
+
+    public void makeHighlight(){
+        animation.buttonHighlight(homeButton);
+        animation.buttonHighlight(newsButton);
+        animation.buttonHighlight(authorButton);
+        animation.buttonHighlight(trendButton);
+        animation.buttonHighlight(historyButton);
+        animation.buttonHighlight(memberButton);
+        animation.buttonHighlight(exitButton);
+    }
 
     @FXML
     void goHome(ActionEvent event) throws IOException {
@@ -59,7 +82,8 @@ public abstract class ControllerButton {
     @FXML
     void showHomeAuthors(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScene.fxml"));          // Nạp root trước khi load controller
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScene.fxml"));
+            // Nạp root trước khi load controller
             Parent root = loader.load();
             ControllerGUI ctl = loader.getController();
             Scene scene = new Scene(root);
@@ -100,6 +124,15 @@ public abstract class ControllerButton {
             stage.close();
         }
     }
+    @FXML
+    void back(ActionEvent event) {
+        if (!LoadFileAndSetData.prevScene.isEmpty()) {
+            Stage stg = (Stage) homeButton.getScene().getWindow();
+            stg.setScene(LoadFileAndSetData.prevScene.peek());
+            LoadFileAndSetData.prevScene.pop();
+        }
+    }
+
 
     @FXML
     void search(){}

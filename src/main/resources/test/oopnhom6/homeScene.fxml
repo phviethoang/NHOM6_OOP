@@ -39,7 +39,7 @@
                      </ImageView>
                     </graphic>
                 </Button>
-                <Button fx:id="newsButton" layoutX="1.0" layoutY="70.0" mnemonicParsing="false" onAction="#showNews" prefHeight="43.0" prefWidth="192.0" style="-fx-background-color: #1b0661;" text="News" textFill="#f4f4f4">
+                <Button fx:id="newsButton" layoutY="78.0" mnemonicParsing="false" onAction="#showNews" prefHeight="43.0" prefWidth="192.0" style="-fx-background-color: #1b0661;" text="News" textFill="#f4f4f4">
                     <font>
                         <Font name="System Bold" size="17.0" />
                     </font>
@@ -50,7 +50,7 @@
                      </ImageView>
                     </graphic>
                 </Button>
-                <Button fx:id="trendButton" layoutX="-1.0" layoutY="110.0" mnemonicParsing="false" onAction="#showTrendings" prefHeight="42.0" prefWidth="194.0" style="-fx-background-color: #1b0661;" text="Trendings" textFill="#f4f4f4">
+                <Button fx:id="trendButton" layoutY="128.0" mnemonicParsing="false" onAction="#showTrendings" prefHeight="42.0" prefWidth="194.0" style="-fx-background-color: #1b0661;" text="Trendings" textFill="#f4f4f4">
                     <font>
                         <Font name="System Bold" size="17.0" />
                     </font>
@@ -61,7 +61,7 @@
                      </ImageView>
                     </graphic>
                 </Button>
-                <Button fx:id="authorButton" layoutX="-2.0" layoutY="153.0" mnemonicParsing="false" onAction="#showAuthors" prefHeight="38.0" prefWidth="194.0" style="-fx-background-color: #1b0661;" text="Authors" textFill="#f4f4f4">
+                <Button fx:id="authorButton" layoutY="177.0" mnemonicParsing="false" onAction="#showAuthors" prefHeight="38.0" prefWidth="194.0" style="-fx-background-color: #1b0661;" text="Authors" textFill="#f4f4f4">
                     <font>
                         <Font name="System Bold" size="17.0" />
                     </font>
@@ -72,7 +72,7 @@
                      </ImageView>
                     </graphic>
                 </Button>
-                <Button fx:id="historyButton" layoutX="1.0" layoutY="195.0" mnemonicParsing="false" onAction="#showHistory" prefHeight="40.0" prefWidth="192.0" style="-fx-background-color: #1b0661;" text="History" textFill="#f4f4f4">
+                <Button fx:id="historyButton" layoutY="222.0" mnemonicParsing="false" onAction="#showHistory" prefHeight="40.0" prefWidth="192.0" style="-fx-background-color: #1b0661;" text="History" textFill="#f4f4f4">
                     <font>
                         <Font name="System Bold" size="17.0" />
                     </font>
@@ -83,7 +83,7 @@
                      </ImageView>
                     </graphic>
                 </Button>
-                <Button fx:id="memberButton" layoutX="1.0" layoutY="240.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="192.0" style="-fx-background-color: #1b0661;" text="About us" textFill="#f4f4f4">
+                <Button fx:id="memberButton" layoutY="268.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="192.0" style="-fx-background-color: #1b0661;" text="About us" textFill="#f4f4f4">
                     <font>
                         <Font name="System Bold" size="17.0" />
                     </font>
