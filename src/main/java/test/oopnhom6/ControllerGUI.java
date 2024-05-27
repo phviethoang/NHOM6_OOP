@@ -13,10 +13,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 
@@ -24,14 +25,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Stack;
 
 public class ControllerGUI extends ControllerButton implements Initializable {
     @FXML
     public AnchorPane scenePane;
     @FXML
     private Button authorButton;
-    @FXML
-    private Button downButton;
     @FXML
     private Button exitButton;
     @FXML
@@ -55,53 +55,56 @@ public class ControllerGUI extends ControllerButton implements Initializable {
     @FXML
     private Button trendButton;
     @FXML
-    private Button upButton;
-    @FXML
-    private ListView<String> listNews;
-    @FXML
-    private TableView<General> tableNews;
+    private Button sortButton;
 
-    Cabinet c=new Cabinet();
+    @FXML
+    private TableView<General> tableView;
+    @FXML
+    private AnchorPane anchorPane;
+    private Stack<TableView> tableStack = new Stack<>();
+    @FXML
+    private Button backButton;
+    @FXML
+    private AnchorPane anchorPane1;
+    @FXML
+    private AnchorPane anchorPane2;
+
+
+
+    Cabinet c = new Cabinet();
     AuthorCabinet ac=new AuthorCabinet();
+    // Tạo một Image
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if(tableNews!=null) tableNews.setVisible(false);
+        if(tableView!=null) tableView.setVisible(false);
         makeHighlight();
+        searchText.setVisible(false);
+        searchButton.setVisible(false);
+        anchorPane.setVisible(false);
+        backButton.setVisible(false);
+        setBackground();
     }
+
     @FXML
     void home(ActionEvent event){
-        tableNews.setVisible(false);
+        tableView.setVisible(false);
         searchText.clear();
+        searchText.setVisible(false);
+        searchButton.setVisible(false);
+        anchorPane.setVisible(false);
+        backButton.setVisible(false);
     }
     @FXML
     void search(KeyEvent event) {
-//        if(c.getBox()!=null){
-//            String search = searchText.getText();
-//            ObservableList<Article> obs = FXCollections.observableArrayList();
-//            for (Article x : SearchAndSort.searchArticle(search, c.getBox())) {
-//                obs.add(x);
-//            }
-//            tableNews.setItems(obs);
-//        }
-//        void showNews(ActionEvent event) throws IOException{
-//            tableNews.setVisible(true);
-//            MakeTableView.makeTableNews(tableNews);
-//            c.setBox(LoadFileAndSetData
-//                    .data_array("C:\\Users\\Dell\\Desktop\\OOPnhom6\\json\\blockchainDigitaltrends (2).json"));
-//            ObservableList<Article> lst = FXCollections.observableArrayList();
-//            for (Article x : c.getBox()) {
-//                lst.add(x);
-//            }
-//            tableNews.setItems(lst);
-//        }
         try{
             if(c.getBox()!=null){
                 String search = searchText.getText();
                 ObservableList<General> obs = FXCollections.observableArrayList();
-                for (Article x : SearchAndSort.searchArticle(search, c.getBox())) {
+                for (Article x : c.searchArticle(search, c.getBox())) {
                     obs.addAll(x);
                 }
-                tableNews.setItems(obs);
+                tableView.setItems(obs);
             }
             if(ac.getAuthorBox()!=null){
                 String search = searchText.getText();
@@ -109,37 +112,21 @@ public class ControllerGUI extends ControllerButton implements Initializable {
                 for (Author x : ac.searchAuthor(search, ac.getAuthorBox())) {
                     obs.addAll(x);
                 }
-                tableNews.setItems(obs);
+                tableView.setItems(obs);
             }
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
     }
-//    @FXML
-//    void scrollToFirst(ActionEvent event) {
-//        tableNews.scrollTo(0);
-//    }
-//    @FXML
-//    void scrollToLast(ActionEvent event) {
-//        tableNews.scrollTo(500);
-//    }
-//    @FXML
-//    void showNews(ActionEvent event) throws IOException{
-//        c.setBox(LoadFileAndSetData
-//                .data_array("C:\\Users\\Dell\\Desktop\\OOPnhom6\\json\\blockchainDigitaltrends (2).json"));
-//        ObservableList<String> lst = FXCollections.observableArrayList();
-//        for (Article x : c.getBox()) {
-//            lst.add(x.getTitle());
-//        }
-//        listNews.setItems(lst);
-//        // String s = LoadFileAndSetData.read_data("blockchain.json");
-//    }
-
-
     @FXML
     void showNews(ActionEvent event){
-//        tableNews.setVisible(true);
-        Table<General> table = new Table<>(tableNews);
+//        tableView.setVisible(true);
+        save();
+        backButton.setVisible(true);
+        searchText.setVisible(true);
+        searchButton.setVisible(true);
+        anchorPane.setVisible(true);
+        Table<General> table = new Table<>(tableView);
         TableColumn<General, Integer> colID = table.columnID(68);
         TableColumn<General, String> colName = table.newColumn("Name", "generalTitle",487.20001220703125, false );
         TableColumn<General, String> colAuthor = table.newColumn("Author", "authorView", false );
@@ -150,12 +137,17 @@ public class ControllerGUI extends ControllerButton implements Initializable {
         for (Article x : c.getBox()) {
              lst.add(x);
         }
-        tableNews.setItems(lst);
+        tableView.setItems(lst);
     }
 
     @FXML
     void showAuthors(ActionEvent event){
-        Table<General> table = new Table<>(tableNews);
+        save();
+        backButton.setVisible(true);
+        searchText.setVisible(true);
+        searchButton.setVisible(true);
+        anchorPane.setVisible(true);
+        Table<General> table = new Table<>(tableView);
         TableColumn<General, Integer> colID = table.columnID(68);
         TableColumn<General, String> colName = table.newColumn("Name", "generalName",487.20001220703125, true );
         table.addColumn(colID, colName);
@@ -165,7 +157,7 @@ public class ControllerGUI extends ControllerButton implements Initializable {
         for (Author x : ac.getAuthorBox()) {
             lst.add(x);
         }
-        tableNews.setItems(lst);
+        tableView.setItems(lst);
 
 //        c.setBox(LoadFileAndSetData
 //                .data_array("C:\\Users\\Dell\\Desktop\\OOPnhom6\\json\\blockchainDigitaltrends (2).json"));
@@ -173,7 +165,7 @@ public class ControllerGUI extends ControllerButton implements Initializable {
 //        for (Article x : c.getBox()) {
 //            lst.add(x);
 //        }
-//        tableNews.setItems(lst);
+//        tableView.setItems(lst);
     }
 //    @FXML
 //    void showHistory(ActionEvent event) throws IOException {
@@ -193,21 +185,19 @@ public class ControllerGUI extends ControllerButton implements Initializable {
 //            stage.close();
 //        }
 //    }
-    @FXML
-    void searching(ActionEvent event) {
 
-    }
     @FXML
     void detailNews(MouseEvent event) {
         try {
             if (event.getClickCount() == 2) {
-                LoadFileAndSetData.prevScene.push(authorButton.getScene());
+                save();
+                prevScene.push(authorButton.getScene());
 
                 FXMLLoader loaderHistory = new FXMLLoader(getClass().getResource("historyScene.fxml"));
-                Parent root0=loaderHistory.load();
+                loaderHistory.load();
                 ControllerHistory controllerHistory = loaderHistory.getController();
                 if(c.getBox()!=null){
-                    General u = tableNews.getSelectionModel().getSelectedItem();
+                    General u = tableView.getSelectionModel().getSelectedItem();
                     if(u!=null){
                         HistoryObject historyObject = new HistoryObject(u);
                         controllerHistory.setTableHistory(historyObject);
@@ -218,7 +208,7 @@ public class ControllerGUI extends ControllerButton implements Initializable {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("DetailAuthor.fxml"));
                     Parent root = loader.load();
                     ControllerAuthorDetail ctl = loader.getController();
-                    General g= tableNews.getSelectionModel().getSelectedItem();
+                    General g= tableView.getSelectionModel().getSelectedItem();
                     if(g instanceof Author a){
 
                         FXMLLoader loaderHistory1 = new FXMLLoader(getClass().getResource("historyScene.fxml"));
@@ -258,25 +248,72 @@ public class ControllerGUI extends ControllerButton implements Initializable {
                 break;
             }
         }
-//        for(int i=0;i<tableNews.getItems().size();i++){
-//            Object cellValue = colName.getCellData(i);
-//            if (cellValue != null && cellValue.toString().equals(selectedItem.getTitle())) {
-//                FXMLLoader loader = new FXMLLoader(getClass().getResource("DetailNews.fxml"));
-//                // Nạp root trước khi load controller
-//                Parent root = loader.load();
-//                ControllerNewsDetail ctl = loader.getController();
-//                ctl.setT(selectedItem);
-//                Scene scene = new Scene(root);
-//                Stage stage = (Stage) homeButton.getScene().getWindow();
-//                stage.setScene(scene);
-//                stage.show();
-//                break;
-//            }
-//        }
     }
+    @FXML
+    void back(ActionEvent event) {
+        if (!tableStack.isEmpty()) {
+//            tableView.getItems().clear();
+//            tableView.getColumns().clear();
 
+            TableView preT = tableStack.pop();
+            tableView.getColumns().setAll(preT.getColumns());
+            tableView.setItems(preT.getItems());
+        }
 
+        else if(! prevScene.isEmpty()) {
+            Scene pS = prevScene.peek();
+            prevScene.pop();
+            Stage stg = (Stage) homeButton.getScene().getWindow();
+            stg.setScene(pS);
+        }
+        else {
+            tableView.setVisible(false);
+            backButton.setVisible(false);
+            searchText.setVisible(false);
+            searchButton.setVisible(false);
+            anchorPane.setVisible(false);
+        }
+    }
+    public void save() {
+        TableView<General> cur = new TableView<>();
+        ObservableList<General> itemsCopy = FXCollections.observableArrayList(tableView.getItems());
+        cur.setItems(itemsCopy);
+        ObservableList<TableColumn<General, ?>> columnsCopy = FXCollections.observableArrayList(tableView.getColumns());
+        cur.getColumns().setAll(columnsCopy);
+        tableStack.push(cur);
+    }
+    @FXML
+    void sortByDate(MouseEvent mouseEvent){
+        Table<General> table = new Table<>(tableView);
+        TableColumn<General, Integer> colID = table.columnID(68);
+        TableColumn<General, String> colName = table.newColumn("Name", "generalTitle",487.20001220703125, false );
+        TableColumn<General, String> colAuthor = table.newColumn("Author", "authorView", false );
+        table.addColumn(colID, colName,colAuthor);
+        c.setBox(c.loadData());
 
+//        if(temp.equals("Cũ nhất")) {
+//            c.sortByDateAZ();
+//        }
+//        else if(temp.equals("Mới nhất")) {
+//            c.sortByDateZA();
+//        }
 
+        if(mouseEvent.getClickCount() == 2) {
+            c.sortByDateAscending();
+        }
+        else if(mouseEvent.getClickCount() == 1) {
+            c.sortByDateDescending();
+        }
+
+//            System.out.println(temp);
+//
+//
+        ObservableList<General> list = FXCollections.observableArrayList();
+        for (Article x : c.getBox()) {
+            list.add(x);
+        }
+        tableView.setItems(list);
+        tableView.refresh();
+    }
 
 }

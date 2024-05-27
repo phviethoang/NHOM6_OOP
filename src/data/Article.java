@@ -1,6 +1,9 @@
 package data;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Article implements General{
     private String links;
@@ -97,6 +100,10 @@ public class Article implements General{
     }
     public void setTags(ArrayList<String> tags) {
         this.tags = tags;
+    }
+    public LocalDate getStandardTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH);
+        return LocalDate.parse(getCreationDate(), formatter);
     }
 
     //Phong TH

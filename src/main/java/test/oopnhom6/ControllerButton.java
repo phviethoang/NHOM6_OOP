@@ -1,23 +1,29 @@
 package test.oopnhom6;
 
+import data.Article;
+import data.Cabinet;
+import data.General;
 import helper.LoadFileAndSetData;
+import helper.Table;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import service.Animation;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Stack;
 
 public abstract class ControllerButton implements Initializable {
     @FXML
@@ -35,13 +41,23 @@ public abstract class ControllerButton implements Initializable {
     @FXML
     private Button memberButton;
     @FXML
-    private TableView tableNews;
+    private TableView<?> tableView;
     @FXML
     private AnchorPane scenePane;
     @FXML
     private Button backButton;
+    @FXML
+    private AnchorPane anchorPane;
+    @FXML
+    private AnchorPane anchorPane1;
+    @FXML
+    private AnchorPane anchorPane2;
+    @FXML
+    private Button sortButton;
     Animation animation=new Animation();
+    Cabinet c=new Cabinet();
 
+    public static Stack<Scene> prevScene = new Stack();
 
     public void makeHighlight(){
         animation.buttonHighlight(homeButton);
@@ -52,9 +68,32 @@ public abstract class ControllerButton implements Initializable {
         animation.buttonHighlight(memberButton);
         animation.buttonHighlight(exitButton);
     }
+    @FXML
+    void setBackground(){
 
+        anchorPane1.getStyleClass().add("anchor-pane1");
+        // Liên kết tệp CSS với AnchorPane
+        String cssFilePath1 = getClass().getResource("/style.css").toExternalForm();
+        anchorPane1.getStylesheets().add(cssFilePath1);
+
+        anchorPane2.getStyleClass().add("anchor-pane2");
+        // Liên kết tệp CSS với AnchorPane
+        String cssFilePath2 = getClass().getResource("/style.css").toExternalForm();
+        anchorPane2.getStylesheets().add(cssFilePath2);
+
+        scenePane.getStyleClass().add("anchor-pane3");
+        // Liên kết tệp CSS với AnchorPane
+        String cssFilePath3 = getClass().getResource("/style.css").toExternalForm();
+        scenePane.getStylesheets().add(cssFilePath3);
+
+        anchorPane.getStyleClass().add("anchor-pane4");
+        // Liên kết tệp CSS với AnchorPane
+        String cssFilePath4 = getClass().getResource("/style.css").toExternalForm();
+        anchorPane.getStylesheets().add(cssFilePath4);
+    }
     @FXML
     void goHome(ActionEvent event) throws IOException {
+        prevScene.push(homeButton.getScene());
         Parent root = FXMLLoader.load(getClass().getResource("homeScene.fxml"));
         Scene scene = new Scene(root);
         Stage primaryStage = (Stage)homeButton.getScene().getWindow();
@@ -65,6 +104,7 @@ public abstract class ControllerButton implements Initializable {
     @FXML
     void showNews(ActionEvent event) {
         try {
+            prevScene.push(homeButton.getScene());
             FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScene.fxml"));
             // Nạp root trước khi load controller
             Parent root = loader.load();
@@ -82,6 +122,7 @@ public abstract class ControllerButton implements Initializable {
     @FXML
     void showHomeAuthors(ActionEvent event) {
         try {
+            prevScene.push(homeButton.getScene());
             FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScene.fxml"));
             // Nạp root trước khi load controller
             Parent root = loader.load();
@@ -98,6 +139,7 @@ public abstract class ControllerButton implements Initializable {
 
     @FXML
     void showTrendings(ActionEvent event) throws IOException {
+        prevScene.push(homeButton.getScene());
         FXMLLoader loader = new FXMLLoader(getClass().getResource("trendingScene.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -108,6 +150,7 @@ public abstract class ControllerButton implements Initializable {
 
     @FXML
     void showHistory(ActionEvent event) throws IOException {
+        prevScene.push(homeButton.getScene());
         Parent root = FXMLLoader.load(getClass().getResource("historyScene.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage) historyButton.getScene().getWindow();
@@ -125,26 +168,19 @@ public abstract class ControllerButton implements Initializable {
         }
     }
     @FXML
-    void back(ActionEvent event) {
-        if (!LoadFileAndSetData.prevScene.isEmpty()) {
-            Stage stg = (Stage) homeButton.getScene().getWindow();
-            stg.setScene(LoadFileAndSetData.prevScene.peek());
-            LoadFileAndSetData.prevScene.pop();
+    void back(){
+        if(!prevScene.isEmpty()) {
+            Stage stg = (Stage) backButton.getScene().getWindow();
+            stg.setScene(prevScene.pop());
         }
     }
-
-
-    @FXML
-    void search(){}
-
-    @FXML
-    void searching(){}
     @FXML
     void scrollToFirst(ActionEvent event) {
-        tableNews.scrollTo(0);
+        tableView.scrollTo(0);
     }
     @FXML
     void scrollToLast(ActionEvent event) {
-        tableNews.scrollTo(500);
+        tableView.scrollTo(500);
     }
+
 }

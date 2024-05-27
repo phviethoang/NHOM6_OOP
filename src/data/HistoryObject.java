@@ -15,7 +15,10 @@ public class HistoryObject {
         this.time = dateTime.format(formatter);
         typeOfObject = "Article";
     }
-
+    public LocalDateTime getDateTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return LocalDateTime.parse(time, formatter);
+    }
     public HistoryObject(Author author)
     {
         LocalDateTime dateTime = LocalDateTime.now();

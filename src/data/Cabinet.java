@@ -5,9 +5,7 @@ import com.google.gson.GsonBuilder;
 import helper.LoadFileAndSetData;
 import helper.SearchAndSort;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Cabinet extends LoadFileAndSetData{
     private ArrayList<Article> box;
@@ -30,6 +28,13 @@ public class Cabinet extends LoadFileAndSetData{
         for (Article article : articles) {
             arr.add(article);
         }
+
+        for(Article article : arr) {
+            for(int i = 0; i < article.getTags().size(); i++) {
+                String tmp = article.getTags().get(i);
+                article.getTags().set(i, standardTag(tmp));
+            }
+        }
         return arr;
     }
 
@@ -47,6 +52,7 @@ public class Cabinet extends LoadFileAndSetData{
                     map.put(x, 1);
             }
         }
+
 
         return getDataToShow(map);
     }
@@ -67,4 +73,27 @@ public class Cabinet extends LoadFileAndSetData{
         }
         return getDataToShow(map);
     }
+    public ArrayList<Article> searchArticle(String keyword, ArrayList<Article> x) {
+        ArrayList<Article> result = new ArrayList<>();
+        for (Article article : x) {
+            for(int i=0;i<article.getAuthor().size();i++) {
+                if (article.getTitle().toLowerCase().contains(keyword.toLowerCase())||article.getAuthor().get(i).toLowerCase().contains(keyword.toLowerCase())) {
+                    result.add(article);
+                }
+            }
+        }
+        return result;
+    }
+
+    public String standardTag(String string) {
+        return string.substring(0,1).toUpperCase() + string.substring(1);
+    }
+    public void sortByDateDescending () {
+        Collections.sort(box, (a1, a2) -> a1.getStandardTime().compareTo(a2.getStandardTime()));
+    }
+
+    public void sortByDateAscending () {
+        Collections.sort(box, (a1, a2) -> -a1.getStandardTime().compareTo(a2.getStandardTime()));
+    }
+
 }

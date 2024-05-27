@@ -2,27 +2,33 @@ package test.oopnhom6;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import data.*;
 import helper.LoadFileAndSetData;
 import helper.SearchAndSort;
+import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class ControllerNewsDetail extends ControllerButton implements Initializable {
     @FXML
@@ -30,73 +36,122 @@ public class ControllerNewsDetail extends ControllerButton implements Initializa
     @FXML
     private TextArea textArea;
     @FXML
-    private TextField searchField;
+    private TextField searchText;
     @FXML
-    private TextFlow textFlow=new TextFlow();
+    private TextFlow textFlow;
+    @FXML
+    private ScrollPane scrollPane;
     @FXML
     Button backButton;
     @FXML
     Button newsButton;
     @FXML
     Button authorButton;
-
-
+    @FXML
+    Button searchButton;
+    private int currentRedIndex=0;
+    String word=new String();
+    Cabinet c=new Cabinet();
+    String milestone=new String();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        final String[] previousKeyword = {""};
         makeHighlight();
-        searchField.setOnKeyPressed(event -> {
+        searchText.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                String keyword = searchField.getText().toLowerCase();
-                highlightKeywords(keyword);
-                System.out.println("Tach mon");
+                String keyword = searchText.getText().toLowerCase();
+                // Kiểm tra nếu keyword hiện tại khác với keyword trước đó
+                if (!keyword.equals(previousKeyword[0])) {
+                    currentRedIndex = 0; // Reset currentRedIndex về giá trị ban đầu
+                    previousKeyword[0] = keyword; // Cập nhật keyword trước đó
+                }
+                highlightKeyword(keyword); // Gọi hàm highlightKeyword
+                currentRedIndex++;
             }
         });
     }
+    private void highlightKeyword(String keyword) {
+        if (keyword == null || keyword.isEmpty()) {
+            return;
+        }
 
-    @FXML
-    void back(ActionEvent event) {
+        // Lấy nội dung văn bản từ TextFlow trước khi clear các children
+        StringBuilder textBuilder = new StringBuilder();
+        for (Node node : textFlow.getChildren()) {
+            if (node instanceof Text) {
+                textBuilder.append(((Text) node).getText());
+            } else if (node instanceof Hyperlink) {
+                textBuilder.append(((Hyperlink) node).getText());
+                word=((Hyperlink)node).getText();
+            }
+        }
+        String text = textBuilder.toString();
+
+        textFlow.getChildren().clear();
+
+        int lastIndex = 0;
+        int index = text.toLowerCase().indexOf(keyword.toLowerCase());
+        int keywordCount = 0;
+        boolean foundRedKeyword = false;
+
+        while (index >= 0) {
+            if (lastIndex < index) {
+                String preKeywordText = text.substring(lastIndex, index);
+                addTextNodes(preKeywordText,word);
+            }
+
+            String highlightText = text.substring(index, index + keyword.length());
+            Text highlight = new Text(highlightText);
+
+            if (!foundRedKeyword && keywordCount == currentRedIndex) {
+                highlight.setFill(Color.RED);
+                foundRedKeyword = true;
+                final int scrollToIndex = textFlow.getChildren().size();
+
+                PauseTransition pause = new PauseTransition(Duration.millis(100));
+                pause.setOnFinished(event -> {
+                    if (scrollToIndex < textFlow.getChildren().size()) {
+                        Node targetNode = textFlow.getChildren().get(scrollToIndex);
+                        scrollPane.layout();
+                        scrollPane.setVvalue(targetNode.getBoundsInParent().getMinY() / textFlow.getBoundsInParent().getHeight());
+                    }
+                });
+                pause.play();
+            } else {
+                highlight.setFill(Color.ORANGE);
+            }
+
+            textFlow.getChildren().add(highlight);
+
+            lastIndex = index + keyword.length();
+            index = text.toLowerCase().indexOf(keyword.toLowerCase(), lastIndex);
+            keywordCount++;
+        }
+
+        if (lastIndex < text.length()) {
+            String postKeywordText = text.substring(lastIndex);
+            addTextNodes(postKeywordText,word);
+        }
+
+        if (currentRedIndex >= keywordCount) {
+            currentRedIndex = -1;
+        }
     }
-//    @FXML
-//    void goHome(ActionEvent event) throws IOException{
-//        Parent root = FXMLLoader.load(getClass().getResource("homeScene.fxml"));
-//        Scene scene = new Scene(root);
-//        Stage primaryStage = (Stage)homeButton.getScene().getWindow();
-//        primaryStage.setScene(scene);
-//        primaryStage.show();
-//    }
-//    @FXML
-//    void showNews(ActionEvent event) {
-//       try {
-//           FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScene.fxml"));          // Nạp root trước khi load controller
-//           Parent root = loader.load();
-//           ControllerGUI ctl = loader.getController();
-//           Scene scene = new Scene(root);
-//           Stage stage = (Stage) newsButton.getScene().getWindow();
-//           stage.setScene(scene);
-//           ctl.showNews(event);
-//           stage.show();
-//       }catch (Exception e){
-//           System.out.println(e.getMessage());
-//       }
-//
-//    }
-//    void showAuthors(ActionEvent event) {
-//        try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScene.fxml"));          // Nạp root trước khi load controller
-//            Parent root = loader.load();
-//            ControllerGUI ctl = loader.getController();
-//            Scene scene = new Scene(root);
-//            Stage stage = (Stage) authorButton.getScene().getWindow();
-//            stage.setScene(scene);
-//            ctl.showAuthors(event);
-//            stage.show();
-//        }catch (Exception e){
-//            System.out.println(e.getMessage());
-//        }
-//    }
 
-    private Hyperlink linkToAuthor(Article article) throws IOException{
-        String s=article.getAuthorView();
+    private void addTextNodes(String text,String s) {
+        int hyperlinkStart = text.indexOf(s);
+        if (hyperlinkStart == -1) {
+            textFlow.getChildren().add(new Text(text));
+        } else {
+            String preHyperlinkText = text.substring(0, hyperlinkStart);
+            String postHyperlinkText = text.substring(hyperlinkStart + s.length());
+            textFlow.getChildren().add(new Text(preHyperlinkText));
+            textFlow.getChildren().add(linkToAuthor(s));
+            textFlow.getChildren().add(new Text(postHyperlinkText));
+        }
+    }
+    private Hyperlink linkToAuthor(String s){
         Hyperlink link=new Hyperlink(s);
         link.setOnAction(e -> {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("DetailAuthor.fxml"));
@@ -113,12 +168,11 @@ public class ControllerNewsDetail extends ControllerButton implements Initializa
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
-            HistoryObject historyObject = new HistoryObject(article);
-            ControllerHistory controllerHistory1 = loaderHistory1.getController();
-            controllerHistory1.setTableHistory(historyObject);
-
             AuthorCabinet ac = new AuthorCabinet();
             ArrayList<Author> author = ac.searchAuthor(s, ac.fullAuthorList());
+            HistoryObject historyObject = new HistoryObject(author.getFirst());
+            ControllerHistory controllerHistory1 = loaderHistory1.getController();
+            controllerHistory1.setTableHistory(historyObject);
             ctl.setLabel(author.getFirst().getName());
             ctl.displayDetailAuthor(author.getFirst());
             ctl.showAuthorArticle();
@@ -126,90 +180,39 @@ public class ControllerNewsDetail extends ControllerButton implements Initializa
             Stage stage = (Stage) authorButton.getScene().getWindow();
             stage.setScene(scene);
             stage.show();
-
         });
         return link;
     }
+    private Hyperlink linkArticleToAuthor(Article article) throws IOException{
+        String s=article.getAuthorView();
+        return linkToAuthor(s);
+    }
+
+
     public void setDetail(Article a)throws IOException{
-        textArea.setWrapText(true);
-        textArea.setEditable(false);
-        textArea.appendText("     Title: "+a.getTitle()+"\n");
-        textArea.appendText("     Author: "+ linkToAuthor(a)+"\n");
-        textArea.appendText("     Creation Date: "+a.getCreationDate()+"\n");
-        textArea.appendText("     Summary: "+a.getSummary()+"\n");
+        milestone=a.getTitle();
+        Text textTitle=new Text("     Title: "+a.getTitle()+"\n");
+        Text textAuthor=new Text("     Author: ");
+        Text textDate=new Text("\n     Creation Date: "+a.getCreationDate()+"\n");
+        Text textSummary=new Text("     Summary: "+a.getSummary()+"\n");
         String detailWithSpaces=a.getDetailContent().replaceAll("\n","\n     ");
-        textArea.appendText(detailWithSpaces);
-        textArea.appendText("\n\n");
-        textArea.appendText("     Hashtag: "+a.getTags());
+        Text textContent=new Text(detailWithSpaces);
+        Text text=new Text("\n\n");
+        Text textTag=new Text("     Hashtag: "+a.getTags());
+        textFlow.getChildren().addAll(textTitle,textAuthor,linkArticleToAuthor(a),textDate,textSummary,textContent,text,textTag);
     }
-    private void highlightKeywords(String keyword) {
-        String text = textArea.getText().toLowerCase();
-        textFlow.getChildren().clear();
-
-        if (keyword.isEmpty()) {
-            textFlow.getChildren().add(new Text(text));
-            return;
-        }
-
-        int lastIndex = 0;
-        int index = text.indexOf(keyword);
-
-        while (index >= 0) {
-            if (lastIndex < index) {
-                textFlow.getChildren().add(new Text(text.substring(lastIndex, index)));
+    @FXML
+    void getArticleToLaunch(ActionEvent event) throws IOException {
+        searchText.clear();
+        c.setBox(c.loadData());
+        if(c.getBox()!=null){
+            for(Article article: c.getBox()){
+                if(milestone.equalsIgnoreCase(article.getTitle())){
+                    textFlow.getChildren().clear();
+                    setDetail(article);
+                    break;
+                }
             }
-
-            Text highlightText = new Text(text.substring(index, index + keyword.length()));
-            highlightText.setFill(Color.YELLOW);
-            textFlow.getChildren().add(highlightText);
-
-            lastIndex = index + keyword.length();
-            index = text.indexOf(keyword, lastIndex);
-            System.out.println("ngu");
-            //Vãi nhái sa
-            //o /l/ai]]] t test chay mai khong duoc cai hieu ung
-        }
-
-        if (lastIndex < text.length()) {
-            textFlow.getChildren().add(new Text(text.substring(lastIndex)));
-        }
+        } else System.out.println(-1);
     }
-//    void searchKeyword(){
-//        try {
-//            if(textArea.getText()!=null){
-//                searchField.setOnKeyPressed(event -> {
-//                    if (event.getCode() == KeyCode.ENTER) {
-//                        String keyword = searchField.getText().toLowerCase();
-//                        highlightKeywords(textArea, keyword, textFlow);
-//                    }
-//                });
-//
-//            }
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//    }
-//    private void highlightKeywords(TextArea textArea, String keyword, TextFlow textFlow) {
-//        String text = textArea.getText().toLowerCase();
-//        textFlow.getChildren().clear();
-//        if (keyword.isEmpty()) {
-//            textFlow.getChildren().add(new Text(text));
-//            return;
-//        }
-//        int index = text.indexOf(keyword);
-//        int lastIndex = 0;
-//        while (index >= 0) {
-//            if (lastIndex < index) {
-//                textFlow.getChildren().add(new Text(text.substring(lastIndex, index)));
-//            }
-//            Text highlightText = new Text(keyword);
-//            highlightText.setFill(Color.YELLOW);
-//            textFlow.getChildren().add(highlightText);
-//            lastIndex = index + keyword.length();
-//            index = text.indexOf(keyword, lastIndex);
-//        }
-//        if (lastIndex < text.length()) {
-//            textFlow.getChildren().add(new Text(text.substring(lastIndex)));
-//        }
-//    }
 }

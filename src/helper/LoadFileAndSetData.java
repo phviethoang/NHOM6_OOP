@@ -14,7 +14,7 @@ import data.Author;
 import javafx.scene.Scene;
 
 public abstract class LoadFileAndSetData {
-    public static Stack<Scene> prevScene = new Stack();
+
 
     // A. Functions for loading data
 

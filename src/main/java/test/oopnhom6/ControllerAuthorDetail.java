@@ -25,7 +25,7 @@ public class ControllerAuthorDetail extends ControllerButton implements Initiali
     @FXML
     private Button homeButton;
     @FXML
-    private TableView<Article> tableNews;
+    private TableView<Article> tableView;
     @FXML
     private Button historyButton;
     @FXML
@@ -59,25 +59,23 @@ public class ControllerAuthorDetail extends ControllerButton implements Initiali
         textArea.appendText("   Work: "+a.getJob()+"\n");
         textArea.appendText("   Biography: "+a.getDetail()+"\n");
     }
-    @FXML
-    void back(){}
 
     @FXML
     void search(KeyEvent event){
         if(c.getBox()!=null){
             String search = searchText.getText();
             ObservableList<Article> obs = FXCollections.observableArrayList();
-            for (Article x : SearchAndSort.searchArticle(search, c.getBox())) {
+            for (Article x : c.searchArticle(search, c.getBox())) {
                 if(x.getAuthor().contains(label.getText())){
                     obs.add(x);
                 }
             }
-            tableNews.setItems(obs);
+            tableView.setItems(obs);
         }
     }
 
     void showAuthorArticle(){
-        Table<Article> table = new Table<>(tableNews);
+        Table<Article> table = new Table<>(tableView);
         TableColumn<Article, Integer> colID = table.columnID(68);
         TableColumn<Article, String> colName = table.newColumn("Name", "title",487.20001220703125, true );
         TableColumn<Article, ArrayList<String>> colDate = table.newColumn("Creation date", "creationDate",114.4000244140625, true );
@@ -90,13 +88,13 @@ public class ControllerAuthorDetail extends ControllerButton implements Initiali
                 fixedList.add(x);
             }
         }
-        tableNews.setItems(fixedList);
+        tableView.setItems(fixedList);
     }
 
     @FXML
     void displayDetailNews(MouseEvent event) throws IOException {
         if(event.getClickCount()==2){
-            Article a=tableNews.getSelectionModel().getSelectedItem();
+            Article a=tableView.getSelectionModel().getSelectedItem();
             if(a!=null){
                 String keyword = a.getTitle();
 
@@ -109,7 +107,7 @@ public class ControllerAuthorDetail extends ControllerButton implements Initiali
                         if(keyword.equals(x.getTitle())) {
                             HistoryObject historyObject = new HistoryObject(x);
                             controllerHistory.setTableHistory(historyObject);
-                            LoadFileAndSetData.prevScene.push(label.getScene());
+                            prevScene.push(label.getScene());
                             FXMLLoader loader = new FXMLLoader(getClass().getResource("DetailNews.fxml"));
                             Parent root = loader.load();
                             ControllerNewsDetail ctl = loader.getController();

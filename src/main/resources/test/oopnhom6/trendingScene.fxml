@@ -10,25 +10,17 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="908.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="test.oopnhom6.ControllerTrending">
+<AnchorPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="908.0" styleClass="anchor-pane3" stylesheets="@../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="test.oopnhom6.ControllerTrending">
     <children>
-        <AnchorPane prefHeight="92.0" prefWidth="193.6" style="-fx-background-color: #108dcc;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <AnchorPane prefHeight="94.0" prefWidth="194.0" styleClass="anchor-pane2" stylesheets="@../../style.css" AnchorPane.bottomAnchor="482.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+        <AnchorPane layoutY="92.0" prefHeight="484.0" prefWidth="177.0" styleClass="anchor-pane1" stylesheets="@../../style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="92.0">
             <children>
-                <Label alignment="CENTER" layoutX="-1.0" layoutY="32.0" prefHeight="28.0" prefWidth="192.0" text="BLOCKCHAIN APP" textFill="WHITE">
-                    <font>
-                        <Font name="Bodoni MT" size="19.0" />
-                    </font>
-                </Label>
-            </children>
-        </AnchorPane>
-        <AnchorPane layoutY="92.0" prefHeight="484.0" prefWidth="177.0" style="-fx-background-color: #1b0661;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="92.0">
-            <children>
-                <Button fx:id="exitButton" layoutX="14.0" layoutY="371.0" mnemonicParsing="false" onAction="#exitApp" prefHeight="30.0" prefWidth="168.0" text="EXIT" AnchorPane.bottomAnchor="10.600000000000001">
+                <Button fx:id="exitButton" blendMode="COLOR_DODGE" layoutX="14.0" layoutY="371.0" mnemonicParsing="false" onAction="#exitApp" prefHeight="30.0" prefWidth="168.0" text="EXIT" AnchorPane.bottomAnchor="10.600000000000001">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font>
                 </Button>
-                <Button fx:id="homeButton" layoutY="20.0" mnemonicParsing="false" onAction="#goHome" prefHeight="38.0" prefWidth="192.0" style="-fx-background-color: #1b0661;" text="Home" textFill="#f4f4f4">
+                <Button fx:id="homeButton" blendMode="COLOR_DODGE" layoutY="20.0" mnemonicParsing="false" onAction="#goHome" prefHeight="38.0" prefWidth="192.0" style="-fx-background-color: #1b0661;" text="Home" textFill="#f4f4f4">
                     <font>
                         <Font name="System Bold" size="17.0" />
                     </font>
@@ -39,7 +31,7 @@
                             </ImageView>
                     </graphic>
                 </Button>
-                <Button fx:id="trendButton" layoutY="116.0" mnemonicParsing="false" onAction="#showTrendings" prefHeight="42.0" prefWidth="194.0" style="-fx-background-color: #1b0661;" text="Trendings" textFill="#f4f4f4">
+                <Button fx:id="trendButton" blendMode="COLOR_DODGE" layoutY="116.0" mnemonicParsing="false" onAction="#showTrendings" prefHeight="42.0" prefWidth="194.0" style="-fx-background-color: #1b0661;" text="Trendings" textFill="#f4f4f4">
                     <font>
                         <Font name="System Bold" size="17.0" />
                     </font>
@@ -50,7 +42,7 @@
                             </ImageView>
                     </graphic>
                 </Button>
-            <Button fx:id="author" alignment="CENTER" layoutX="62.0" layoutY="166.0" mnemonicParsing="false" onAction="#showAuthor" prefHeight="30.0" prefWidth="131.0" style="-fx-background-color: #1b0661;" text="Author" textFill="#f4f4f4">
+            <Button fx:id="author" alignment="CENTER" blendMode="COLOR_DODGE" layoutX="62.0" layoutY="166.0" mnemonicParsing="false" onAction="#showAuthor" prefHeight="30.0" prefWidth="131.0" style="-fx-background-color: #1b0661;" text="Author" textFill="#f4f4f4">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -62,7 +54,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="category" layoutX="62.0" layoutY="203.0" mnemonicParsing="false" onAction="#showCategory" prefHeight="30.0" prefWidth="131.0" style="-fx-background-color: #1b0661;" text="Category" textFill="#f4f4f4">
+            <Button fx:id="category" blendMode="COLOR_DODGE" layoutX="62.0" layoutY="203.0" mnemonicParsing="false" onAction="#showCategory" prefHeight="30.0" prefWidth="131.0" style="-fx-background-color: #1b0661;" text="Category" textFill="#f4f4f4">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -74,7 +66,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="hashTag" alignment="CENTER" layoutX="62.0" layoutY="240.0" mnemonicParsing="false" onAction="#showHashTag" prefHeight="30.0" prefWidth="131.0" style="-fx-background-color: #1b0661;" text="Hashtag" textFill="#f4f4f4">
+            <Button fx:id="hashTag" alignment="CENTER" blendMode="COLOR_DODGE" layoutX="62.0" layoutY="240.0" mnemonicParsing="false" onAction="#showHashTag" prefHeight="30.0" prefWidth="131.0" style="-fx-background-color: #1b0661;" text="Hashtag" textFill="#f4f4f4">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -86,7 +78,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="authorButton" layoutY="282.0" mnemonicParsing="false" onAction="#showHomeAuthors" prefHeight="38.0" prefWidth="194.0" style="-fx-background-color: #1b0661;" text="Authors" textFill="#f4f4f4">
+            <Button fx:id="authorButton" blendMode="COLOR_DODGE" layoutY="282.0" mnemonicParsing="false" onAction="#showHomeAuthors" prefHeight="38.0" prefWidth="194.0" style="-fx-background-color: #1b0661;" text="Authors" textFill="#f4f4f4">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
@@ -98,7 +90,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="historyButton" layoutY="327.0" mnemonicParsing="false" onAction="#showHistory" prefHeight="40.0" prefWidth="192.0" style="-fx-background-color: #1b0661;" text="History" textFill="#f4f4f4">
+            <Button fx:id="historyButton" blendMode="COLOR_DODGE" layoutY="327.0" mnemonicParsing="false" onAction="#showHistory" prefHeight="40.0" prefWidth="192.0" style="-fx-background-color: #1b0661;" text="History" textFill="#f4f4f4">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
@@ -110,7 +102,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="memberButton" layoutY="373.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="192.0" style="-fx-background-color: #1b0661;" text="About us" textFill="#f4f4f4">
+            <Button fx:id="memberButton" blendMode="COLOR_DODGE" layoutY="373.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="192.0" style="-fx-background-color: #1b0661;" text="About us" textFill="#f4f4f4">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
@@ -122,7 +114,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="newsButton" layoutY="66.0" mnemonicParsing="false" onAction="#showNews" prefHeight="43.0" prefWidth="192.0" style="-fx-background-color: #1b0661;" text="News" textFill="#f4f4f4">
+            <Button fx:id="newsButton" blendMode="COLOR_DODGE" layoutY="66.0" mnemonicParsing="false" onAction="#showNews" prefHeight="43.0" prefWidth="192.0" style="-fx-background-color: #1b0661;" text="News" textFill="#f4f4f4">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
@@ -138,8 +130,8 @@
         </AnchorPane>
         <HBox layoutX="620.0" layoutY="33.0" prefHeight="104.0" prefWidth="263.0" AnchorPane.bottomAnchor="439.0" AnchorPane.leftAnchor="620.0" AnchorPane.rightAnchor="24.799999999999955" AnchorPane.topAnchor="33.0">
             <children>
-                <TextField fx:id="searchText" onKeyTyped="#search" prefHeight="35.0" prefWidth="566.0" promptText="Searching here" />
-                <Button fx:id="searchButton" blendMode="DARKEN" mnemonicParsing="false" onAction="#searching" prefHeight="35.0" prefWidth="37.0">
+                <TextField fx:id="searchText" onKeyTyped="#search" opacity="0.8" prefHeight="35.0" prefWidth="566.0" promptText="Searching here" />
+                <Button fx:id="searchButton" mnemonicParsing="false" opacity="0.8" prefHeight="35.0" prefWidth="37.0">
                     <graphic>
                         <ImageView blendMode="DARKEN" fitHeight="27.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                             <Image url="@image/Search-icon.jpg" />
@@ -148,9 +140,9 @@
                 </Button>
             </children>
         </HBox>
-        <AnchorPane layoutX="723.0" layoutY="92.0" prefHeight="412.0" prefWidth="45.0" style="-fx-background-color: #635e60;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="92.0">
+        <AnchorPane fx:id="anchorPane" layoutX="723.0" layoutY="92.0" prefHeight="412.0" prefWidth="45.0" styleClass="anchor-pane4" stylesheets="@../../style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="92.0">
             <children>
-                <Button fx:id="firstButton" mnemonicParsing="false" onAction="#scrollToFirst" prefHeight="39.0" prefWidth="39.0" style="-fx-background-color: #32aae6;">
+                <Button fx:id="firstButton" blendMode="HARD_LIGHT" mnemonicParsing="false" onAction="#scrollToFirst" prefHeight="39.0" prefWidth="39.0" style="-fx-background-color: #32aae6;">
                     <graphic>
                         <ImageView fitHeight="38.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
 
@@ -158,15 +150,7 @@
                             </ImageView>
                     </graphic>
                 </Button>
-                <Button fx:id="upButton" layoutY="39.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="47.0" style="-fx-background-color: #32aae6;">
-                    <graphic>
-                        <ImageView blendMode="LIGHTEN" fitHeight="19.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-
-                                <Image url="@image/up-arrow.png" />
-                            </ImageView>
-                    </graphic>
-                </Button>
-                <Button fx:id="lastButton" layoutY="371.0" mnemonicParsing="false" onAction="#scrollToLast" prefHeight="39.0" prefWidth="39.0" style="-fx-background-color: #32aae6;" AnchorPane.bottomAnchor="1.7999999999999972">
+                <Button fx:id="lastButton" blendMode="HARD_LIGHT" layoutY="371.0" mnemonicParsing="false" onAction="#scrollToLast" prefHeight="39.0" prefWidth="39.0" style="-fx-background-color: #32aae6;" AnchorPane.bottomAnchor="1.7999999999999972">
                     <graphic>
                         <ImageView fitHeight="38.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
 
@@ -174,21 +158,13 @@
                             </ImageView>
                     </graphic>
                 </Button>
-                <Button fx:id="downButton" layoutY="330.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="47.0" style="-fx-background-color: #32aae6;" AnchorPane.bottomAnchor="42.8">
-                    <graphic>
-                        <ImageView blendMode="LIGHTEN" fitHeight="19.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-
-                                <Image url="@image/down-arrow.png" />
-                            </ImageView>
-                    </graphic>
-                </Button>
             </children></AnchorPane>
-      <Label fx:id="label" alignment="CENTER" layoutX="195.0" layoutY="24.0" prefHeight="46.0" prefWidth="399.0" text="BLOCKCHAIN TRENDS" textFill="#e41e1e">
+      <Label fx:id="label" alignment="CENTER" layoutX="251.0" layoutY="24.0" prefHeight="46.0" prefWidth="351.0" text="BLOCKCHAIN TRENDS" textFill="#e41e1e">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <TableView fx:id="tableView" layoutX="195.2" layoutY="92.0" onMouseClicked="#showDetails" prefHeight="484.0" prefWidth="669.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="195.0" AnchorPane.rightAnchor="44.0" AnchorPane.topAnchor="92.0" />
-      <Button fx:id="backButton" layoutX="203.0" layoutY="57.0" mnemonicParsing="false" onAction="#back" text="Back" />
+      <TableView fx:id="tableView" layoutX="195.2" layoutY="92.0" onMouseClicked="#showDetails" opacity="0.8" prefHeight="484.0" prefWidth="669.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="195.0" AnchorPane.rightAnchor="44.0" AnchorPane.topAnchor="92.0" />
+      <Button fx:id="backButton" layoutX="203.0" layoutY="57.0" mnemonicParsing="false" onAction="#back" opacity="0.8" text="Back" />
     </children>
 </AnchorPane>
